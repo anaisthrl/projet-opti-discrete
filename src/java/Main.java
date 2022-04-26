@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String args[]) throws IOException {
-        Graph graph = load("C:/Users/Epulapp/Documents/4A/OptiDiscrete/Projet/A6409.txt");
+        Graph graph = load("C:/Users/Epulapp/Documents/Polytech//optimisation_discrete/A3205.txt");
 
         for (int i = 0; i < graph.nodes.size(); i++) {
             System.out.println("index : " + i + "; "
@@ -16,6 +16,8 @@ public class Main {
                     + " y : " + graph.nodes.get(i).posY + "; "
                     + " q : " + graph.nodes.get(i).poids);
         }
+
+       new CVRP(graph);
     }
 
 
