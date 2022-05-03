@@ -36,6 +36,8 @@ public class Main {
             }
             System.out.print("\n");
         }
+
+        new CVRP(graph);
     }
 
     public static Graph genAleatoire(Graph graph) {
