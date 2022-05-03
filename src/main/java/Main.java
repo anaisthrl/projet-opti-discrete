@@ -40,7 +40,7 @@ public class Main {
 
         CVRP cvrp = new CVRP(graph);
 
-        cvrp.repaint();
+        //cvrp.repaint();
     }
 
     public static Graph genAleatoire(Graph graph) {
