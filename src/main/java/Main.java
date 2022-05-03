@@ -11,7 +11,7 @@ public class Main {
     public static double MAX_CAPACITY = 100;
 
     public static void main(String args[]) throws IOException {
-        Graph graph = load("C:/Users/Epulapp/Documents/4A/OptiDiscrete/Projet/A6409.txt");
+        Graph graph = load("C:/Users/Epulapp/Documents/4A/OptiDiscrete/Projet/A3205.txt");
         double nbColis = 0;
 
         for (int i = 0; i < graph.nodes.size(); i++) {
@@ -35,9 +35,12 @@ public class Main {
 
             }
             System.out.print("\n");
+            System.out.println("Distance de la tournee : " + vehicule.getDistanceTournee());
         }
 
-        new CVRP(graph);
+        CVRP cvrp = new CVRP(graph);
+
+        cvrp.repaint();
     }
 
     public static Graph genAleatoire(Graph graph) {
