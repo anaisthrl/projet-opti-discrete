@@ -1,19 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
 
-public class CVRP extends JFrame{
+public class CVRP extends JFrame implements ActionListener {
 
     private Graph graph = new Graph();
     private int DECALAGE = 100;
     private int ZOOM = 6;
-    private JButton buttonRedraw;
-
-
+    private JButton btnDraw;
 
 
     public CVRP(Graph g){
@@ -21,7 +21,11 @@ public class CVRP extends JFrame{
         setTitle("Représentation CVRP");
         setSize(1000,1000);
         setVisible(true);
+        setLayout(new FlowLayout());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        btnDraw.addActionListener(this);
+        this.add(btnDraw);
     }
 
     @Override
@@ -57,7 +61,16 @@ public class CVRP extends JFrame{
                 previous = current; //On garde en mémoire le noeud précedent
             }
         }
+
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
 
+        if (source == btnDraw) {
+            System.out.println("re Paint");
+            this.repaint();
+        }
+    }
 }
