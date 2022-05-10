@@ -10,6 +10,7 @@ public class Vehicule {
 
     public double getDistanceTournee() {
         double res = 0;
+
         for (int i = 1; i < tournee.size(); i++) {
             res += getDistanceBetween2Node(tournee.get(i-1), tournee.get(i));
         }

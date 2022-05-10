@@ -11,7 +11,7 @@ public class Main {
     public static double MAX_CAPACITY = 100;
 
     public static void main(String args[]) throws IOException {
-        Graph graph = load("C:/Users/Epulapp/Documents/4A/OptiDiscrete/Projet/A3205.txt");
+        Graph graph = load("C:/Users/Epulapp/Documents/Polytech/optimisation_discrete/A3205.txt");
         double nbColis = 0;
 
         for (int i = 0; i < graph.nodes.size(); i++) {
@@ -28,14 +28,26 @@ public class Main {
 
         graph = genAleatoire(graph);
         System.out.println("Nb vehicule : " + graph.vehicules.size());
+
         for (Vehicule vehicule : graph.vehicules) {
+            //tableau index AT
+            ArrayList<Integer> arIndex = new ArrayList<>();
+
             System.out.println("NbColis du vehicule : " + vehicule.nbColis);
             for(Node node : vehicule.tournee) {
                 System.out.print(graph.nodes.indexOf(node) + " ");
-
+                arIndex.add(graph.nodes.indexOf(node));
             }
             System.out.print("\n");
             System.out.println("Distance de la tournee : " + vehicule.getDistanceTournee());
+
+            //AT
+            System.out.print("\n");
+            System.out.println("relocate...\n");
+            OperateursVoisinage ov = new OperateursVoisinage();
+            ov.relocate(arIndex);
+            System.out.print("\n");
+
         }
 
         CVRP cvrp = new CVRP(graph);
