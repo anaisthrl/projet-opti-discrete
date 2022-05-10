@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -30,6 +31,7 @@ public class CVRP extends JFrame implements ActionListener {
 
     @Override
     public void paint(Graphics g){
+        super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         /*for (int i = 0; i < graph.nodes.size(); i++){
             if(i==0){
@@ -61,7 +63,6 @@ public class CVRP extends JFrame implements ActionListener {
                 previous = current; //On garde en mémoire le noeud précedent
             }
         }
-
     }
 
     @Override
@@ -70,7 +71,15 @@ public class CVRP extends JFrame implements ActionListener {
 
         if (source == btnDraw) {
             System.out.println("re Paint");
+            try {
+                this.graph = Main.load(Main.paths[0]);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            Main.genAleatoire(this.graph);
+
             this.repaint();
         }
+        source = null;
     }
 }

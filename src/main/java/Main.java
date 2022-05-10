@@ -9,9 +9,15 @@ import java.util.Random;
 
 public class Main {
     public static double MAX_CAPACITY = 100;
+    public static String[] paths = {
+            "C:/Users/Epulapp/Documents/4A/OptiDiscrete/Projet/A3205.txt",
+            "C:/Users/Epulapp/Documents/4A/OptiDiscrete/Projet/A3205.txt",
+            "C:/Users/Epulapp/Documents/4A/OptiDiscrete/Projet/A3205.txt",
+            "C:/Users/Epulapp/Documents/4A/OptiDiscrete/Projet/A3205.txt",
+    };
 
     public static void main(String args[]) throws IOException {
-        Graph graph = load("C:/Users/Epulapp/Documents/4A/OptiDiscrete/Projet/A3205.txt");
+        Graph graph = load(paths[0]);
         double nbColis = 0;
 
         for (int i = 0; i < graph.nodes.size(); i++) {
