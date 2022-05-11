@@ -4,25 +4,20 @@ public class OperateursVoisinage {
 
     OperateursVoisinage(){}
 
-    public void relocate(ArrayList<Integer> arIndex){
-        //tri des index
-        triInsertion(arIndex);
-        for(int i =0; i<=arIndex.size()-1; i++)
-            System.out.print(arIndex.get(i) + " ");
+    //cette fonction échange deux clients données dans notre tournée
+    public void relocate2Clients(ArrayList<Node> list,int indexC1, int indexC2){
+        Node tempNode = list.get(indexC1);
+        list.set(indexC1,list.get(indexC2));
+        list.set(indexC2,tempNode);
     }
 
-    private void triInsertion(ArrayList<Integer> arIndex){
-        int tmp;
-        int k;
-
-        for(int i = 2; i<= arIndex.size()-2; i++){
-            tmp = arIndex.get(i);
-            k = i;
-            while(k>1 && arIndex.get(i-1)> tmp){
-                arIndex.set(k,arIndex.get(k-1));
-                k--;
-            }
-            arIndex.set(k,tmp);
+    //cette fonction va échanger tous les clients de notre tournée
+    public void relocateAllClients(ArrayList<Node> list){
+        for(int i =0; i<= list.size()-1; i++){
+            if(i==list.size()-1) relocate2Clients(list,i,0);
+            else relocate2Clients(list, i,i+1);
         }
     }
+
+
 }

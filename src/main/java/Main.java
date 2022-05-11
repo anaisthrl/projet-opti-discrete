@@ -30,25 +30,14 @@ public class Main {
         System.out.println("Nb vehicule : " + graph.vehicules.size());
 
         for (Vehicule vehicule : graph.vehicules) {
-            //tableau index AT
-            ArrayList<Integer> arIndex = new ArrayList<>();
-
             System.out.println("NbColis du vehicule : " + vehicule.nbColis);
             for(Node node : vehicule.tournee) {
                 System.out.print(graph.nodes.indexOf(node) + " ");
-                arIndex.add(graph.nodes.indexOf(node));
             }
             System.out.print("\n");
             System.out.println("Distance de la tournee : " + vehicule.getDistanceTournee());
-
-            //AT
-            System.out.print("\n");
-            System.out.println("relocate...\n");
-            OperateursVoisinage ov = new OperateursVoisinage();
-            ov.relocate(arIndex);
-            System.out.print("\n");
-
         }
+
 
         CVRP cvrp = new CVRP(graph);
 
@@ -72,7 +61,7 @@ public class Main {
                 if (copy.size() == 1) {
                     i = 0;
                 } else {
-                    i = rand.nextInt(0, copy.size() - 1);
+                    i = rand.nextInt(copy.size() - 1);
                 }
                 poids = copy.get(i).poids;
 
