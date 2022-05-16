@@ -38,4 +38,12 @@ public class OperateursVoisinage {
             else exchange2Clients(list, i,i+1);
         }
     }
+
+    //2-opt
+    public void twoOptSimple(ArrayList<Node> list, int indexDep1, int indexArr1, int indexDep2, int indexArr2){
+        Node nodeTemp = list.get(indexDep1);
+        Node nodeTemp2 = list.get(indexArr2);
+        list.set(indexDep1, nodeTemp2);
+        list.set(indexArr2, nodeTemp);
+    }
 }
