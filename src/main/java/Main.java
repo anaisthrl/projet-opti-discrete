@@ -1,3 +1,5 @@
+import Model.*;
+import Operations.OperateursVoisinage;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -10,10 +12,10 @@ import java.util.Random;
 public class Main {
     public static double MAX_CAPACITY = 100;
     public static String[] paths = {
-            "C:/Users/Epulapp/Documents/4A/OptiDiscrete/Projet/A3205.txt",
-            "C:/Users/Epulapp/Documents/4A/OptiDiscrete/Projet/A3205.txt",
-            "C:/Users/Epulapp/Documents/4A/OptiDiscrete/Projet/A3205.txt",
-            "C:/Users/Epulapp/Documents/4A/OptiDiscrete/Projet/A3205.txt",
+            "ressources/A3205.txt",
+            "ressources/A3205.txt",
+            "ressources/A3205.txt",
+            "ressources/A3205.txt",
     };
 
     public static void main(String args[]) throws IOException {
@@ -52,7 +54,7 @@ public class Main {
             System.out.print("\n");
             System.out.println("relocate...\n");
             OperateursVoisinage ov = new OperateursVoisinage();
-            ov.relocate(arIndex);
+            //ov.relocate(arIndex);
             System.out.print("\n");
 
         }
@@ -106,7 +108,7 @@ public class Main {
         /*
          * READ input
          */
-        int i = 0, x, y, q;
+        int i = 0, x, y, q, index;
         String[] splittedLine;
         Graph graph = new Graph();
         graph.nodes = new ArrayList<Node>();
@@ -120,18 +122,20 @@ public class Main {
 
             if (i == 0) {
 
-            } else if (i == 1) {                            // second line: depot coordinates
+            } else if (i == 1) {// second line: depot coordinates
+                index = Integer.parseInt(splittedLine[0]);
                 x = Integer.parseInt(splittedLine[1]);    // x-coordinates
                 y = Integer.parseInt(splittedLine[2]);    // y-coordinates
                 q = Integer.parseInt(splittedLine[3]);    // y-coordinates
-                graph.nodes.add(new Depot(x, y, q));
+                graph.nodes.add(new Depot(x, y, q, index));
 
-            } else {                                        // other lines
+            } else {
+                index = Integer.parseInt(splittedLine[0]);// other lines
                 x = Integer.parseInt(splittedLine[1]);    // x-coordinates
                 y = Integer.parseInt(splittedLine[2]);    // y-coordinates
                 q = Integer.parseInt(splittedLine[3]);    // demand
 
-                graph.nodes.add(new Client(x, y, q));
+                graph.nodes.add(new Client(x, y, q, index));
             }
             i++;
         }
