@@ -3,9 +3,9 @@ package Operations;
 import Model.Graph;
 
 public abstract class Operation {
-    public abstract Graph apply(Graph graph);
+    public abstract void apply(Graph graph);
 
-    public abstract Graph revert(Graph graph);
+    public abstract Operation revert();
 
     public abstract boolean isValid(Graph graph);
 }

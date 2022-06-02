@@ -10,12 +10,11 @@ import java.util.List;
 import java.util.Random;
 
 public class Main {
-    public static double MAX_CAPACITY = 100;
     public static String[] paths = {
             "ressources/A3205.txt",
-            "ressources/A3205.txt",
-            "ressources/A3205.txt",
-            "ressources/A3205.txt",
+            "ressources/A3305.txt",
+            "ressources/A3306.txt",
+            "ressources/A3405.txt",
     };
 
     public static void main(String args[]) throws IOException {
@@ -23,14 +22,14 @@ public class Main {
         double nbColis = 0;
 
         for (int i = 0; i < graph.nodes.size(); i++) {
-            nbColis += graph.nodes.get(i).poids;
+            nbColis += graph.nodes.get(i).getPoids();
             System.out.println("index : " + i + "; "
-                    + " x : " + graph.nodes.get(i).posX + "; "
-                    + " y : " + graph.nodes.get(i).posY + "; "
-                    + " q : " + graph.nodes.get(i).poids);
+                    + " x : " + graph.nodes.get(i).getPos().getX() + "; "
+                    + " y : " + graph.nodes.get(i).getPos().getY() + "; "
+                    + " q : " + graph.nodes.get(i).getPoids());
         }
 
-        double res = nbColis / MAX_CAPACITY;
+        double res = nbColis / Vehicule.MAX_CAPACITY;
         System.out.println("Nb colis : " + nbColis);
         System.out.println("Nb minimum de vehicules : " + Math.ceil(res));
 
@@ -48,7 +47,7 @@ public class Main {
                 arIndex.add(graph.nodes.indexOf(node));
             }
             System.out.print("\n");
-            System.out.println("Distance de la tournee : " + vehicule.getDistanceTournee());
+            System.out.println("Distance de la tournee : " + vehicule.longueur);
 
             //AT
             System.out.print("\n");
@@ -71,7 +70,7 @@ public class Main {
 
         while (!copy.isEmpty()) {
             Vehicule vehicule = new Vehicule();
-            vehicule.tournee = new ArrayList<>();
+            vehicule.tournee = new Tournee();
             vehicule.tournee.add(depot);
             vehicule.nbColis = 0;
             int poids = 0;
@@ -83,11 +82,10 @@ public class Main {
                 } else {
                     i = rand.nextInt(0, copy.size() - 1);
                 }
-                poids = copy.get(i).poids;
+                poids = copy.get(i).getPoids();
 
-                if(vehicule.nbColis + poids <= 100) {
-                    vehicule.nbColis += poids;
-                    vehicule.tournee.add(copy.remove(i));
+                if(vehicule.getNbColis() + poids <= 100) {
+                    vehicule.addClient(copy.remove(i));
                 } else {
                     encorePlace = false;
                 }
