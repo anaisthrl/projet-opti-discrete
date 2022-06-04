@@ -28,4 +28,9 @@ public abstract class Node {
     public void setIndex(Integer index) {
         this.index = index;
     }
+
+    public double getDistanceToNode(Node b) {
+        return Math.sqrt(Math.pow(this.getPos().getX() - b.getPos().getX(), 2)
+                + Math.pow(this.getPos().getY() - b.getPos().getY(), 2));
+    }
 }

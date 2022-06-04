@@ -16,9 +16,19 @@ public class Graph {
 
     public Vehicule getVehiculeContaining(Node node) {
         for (final Vehicule vehicule : vehicules) {
-            if (vehicule.tournee.contains(node)) return vehicule;
+            if (vehicule.tournee.contains(node)) {
+                return vehicule;
+            }
         }
+        return null;
+    }
 
+    public Vehicule getVehiculeFromTournee(Tournee _tournee) {
+        for (final Vehicule vehicule : vehicules) {
+            if (vehicule.tournee.equals(_tournee)) {
+                return vehicule;
+            }
+        }
         return null;
     }
 

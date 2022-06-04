@@ -5,6 +5,8 @@ import Model.Graph;
 import Model.Node;
 import Model.Vehicule;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Swap extends Operation {
@@ -30,8 +32,19 @@ public class Swap extends Operation {
         final int iA = vA.tournee.indexOf(a);
         final int iB = vB.tournee.indexOf(b);
 
-        vA.tournee.set(iA, b);
-        vB.tournee.set(iB, a);
+        //vA.tournee.set(iA, b);
+        //vB.tournee.set(iB, a);
+
+
+
+        List<Node> subPathA =  vA.tournee.subList(iA,  vA.tournee.size());
+        List<Node> subPathB =  vB.tournee.subList(iB,  vB.tournee.size());
+
+        List<Node> tmp = new ArrayList<>(subPathA);
+        subPathA.clear();
+        vA.tournee.addAll(subPathB);
+        subPathB.clear();
+        vB.tournee.addAll(tmp);
     }
 
     @Override
