@@ -51,7 +51,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="100.0" minWidth="300.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<VBox minHeight="100.0" minWidth="300.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.controller.Controller">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -70,18 +70,13 @@
             <MenuItem mnemonicParsing="false" text="Démarrer" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Aide">
-          <items>
-            <MenuItem mnemonicParsing="false" onAction="#showAboutWindow" text="A propos" />
-          </items>
-        </Menu>
       </menus>
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <SplitPane dividerPositions="0.8012519561815337" prefHeight="695.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
-                <AnchorPane fx:id="graphPane" minHeight="0.0" minWidth="0.0" onMouseDragged="#handleGraphPaneDragged" onMouseMoved="#updateMouseCoordinates" onMousePressed="#handleGraphPanePressed" onScroll="#handleGraphPaneScroll" prefHeight="160.0" prefWidth="100.0" style="-fx-border-color: lightgray;">
+                <AnchorPane fx:id="graphPane" minHeight="0.0" minWidth="0.0" onMouseDragged="#handleGraphPaneDragged" onMouseMoved="#updateMouseCoordinates" onMousePressed="#handleGraphPanePressed" prefHeight="160.0" prefWidth="100.0" style="-fx-border-color: lightgray;">
                      <children>
                         <Label fx:id="graphZoneLabel" alignment="CENTER" layoutX="1.0" prefHeight="693.0" prefWidth="1021.0" text="Le graphe apparaîtra ici" textAlignment="CENTER" textFill="GREY" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
@@ -114,7 +109,7 @@
                                                 <Label fx:id="loadingPercentage" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="224.0" text="0%" />
                                              </children>
                                           </AnchorPane>
-                                          <Button fx:id="startSimulationBtn" layoutX="16.0" layoutY="569.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Pas à pas" AnchorPane.leftAnchor="16.0" />
+                                          <Button fx:id="startSimulationBtn" layoutX="16.0" layoutY="455.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Pas à pas" AnchorPane.leftAnchor="16.0" />
                                           <Label layoutX="21.0" layoutY="223.0" text="Nombre de véhicules : " />
                                           <Label fx:id="statNbVehicles" layoutX="143.0" layoutY="223.0" text="0" />
                                           <CheckBox fx:id="chkbox2Opt" layoutX="18.0" layoutY="341.0" mnemonicParsing="false" text="2-opt" visible="false" />
@@ -125,10 +120,10 @@
                                           </Label>
                                           <CheckBox fx:id="chkboxExchange" layoutX="18.0" layoutY="361.0" mnemonicParsing="false" text="Exchange" visible="false" />
                                           <CheckBox fx:id="chkboxRelocate" layoutX="18.0" layoutY="381.0" mnemonicParsing="false" text="Relocate" visible="false" />
-                                          <Separator layoutY="534.0" prefHeight="18.0" prefWidth="251.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                          <Separator layoutY="420.0" prefHeight="18.0" prefWidth="251.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                           <Label layoutX="21.0" layoutY="240.0" text="Fitness :" />
                                           <Label fx:id="statFitness" layoutX="66.0" layoutY="240.0" text="n/a" />
-                                          <Button fx:id="startSimulationBtn1" layoutX="16.0" layoutY="602.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Lancer" />
+                                          <Button fx:id="startSimulationBtn1" layoutX="16.0" layoutY="488.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Lancer" />
                                        </children>
                                     </AnchorPane>
                               </content>

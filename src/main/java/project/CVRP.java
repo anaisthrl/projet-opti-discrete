@@ -1,13 +1,14 @@
-import Algorithms.Recuit;
-import Model.Graph;
-import Model.Node;
-import Model.Vehicule;
+package project;
+
+import project.Algorithms.Recuit;
+import project.Model.Graph;
+import project.Model.Node;
+import project.Model.Vehicule;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -80,11 +81,11 @@ public class CVRP extends JFrame implements ActionListener {
         recuit.setGraph(this.graph);
         if (source == btnDraw) {
             System.out.println("re Paint");
-            //this.graph = Main.load(Main.paths[0]);
+            //this.graph = project.Main.load(project.Main.paths[0]);
             recuit.update();
             this.graph = recuit.getGraph();
 
-            //Main.genAleatoire(this.graph);
+            //project.Main.genAleatoire(this.graph);
 
 
             this.repaint();

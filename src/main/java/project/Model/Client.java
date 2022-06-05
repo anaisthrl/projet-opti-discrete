@@ -1,4 +1,4 @@
-package Model;
+package project.Model;
 
 public class Client extends Node {
     public Client(int x, int y, int q, int i) {

@@ -1,4 +1,4 @@
-package Model;
+package project.Model;
 
 public class Point {
     private Integer x;

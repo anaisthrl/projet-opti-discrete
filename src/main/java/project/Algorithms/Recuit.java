@@ -1,10 +1,9 @@
-package Algorithms;
+package project.Algorithms;
 
-import Model.Graph;
-import Operations.Neighbourhood;
-import Operations.Operation;
+import project.Model.Graph;
+import project.Operations.Neighbourhood;
+import project.Operations.Operation;
 
-import java.util.List;
 import java.util.Random;
 
 public class Recuit {

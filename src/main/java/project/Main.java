@@ -1,15 +1,23 @@
-import Model.*;
-import Operations.OperateursVoisinage;
+package project;
+
+import project.Model.*;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Main {
+public class Main  extends Application {
+    private static Stage stage;
     public static String[] paths = {
             "ressources/A3205.txt",
             "ressources/A3305.txt",
@@ -17,7 +25,24 @@ public class Main {
             "ressources/A3405.txt",
     };
 
+    @Override
+    public void start(Stage stage) throws IOException {
+        URL fxmlFile = new File("src/main/resources/form/cvrp.fxml").toURI().toURL();
+        Parent root = FXMLLoader.load(fxmlFile);
+        Scene scene = new Scene(root);
+        stage.setTitle("Capacited Vehicle Routing Problem");
+        stage.setScene(scene);
+        Main.stage = stage;
+        stage.show();
+    }
+
+
     public static void main(String args[]) throws IOException {
+        launch();
+    }
+
+
+    /*public static void showresult(String args[]) throws IOException {
         Graph graph = load(paths[0]);
         double nbColis = 0;
 
@@ -61,7 +86,7 @@ public class Main {
         CVRP cvrp = new CVRP(graph);
 
         //cvrp.repaint();
-    }
+    }*/
 
     public static Graph genAleatoire(Graph graph) {
         ArrayList<Node> copy = new ArrayList<>(graph.nodes);
@@ -96,8 +121,8 @@ public class Main {
         return graph;
     }
 
-    public static Graph load(String pathFile) throws IOException {
-        File myFile = new File(pathFile);
+    public static Graph load(File myFile) throws IOException {
+        //File myFile = new File(pathFile);
 
         FileInputStream inputStream = new FileInputStream(myFile);
 
@@ -138,5 +163,9 @@ public class Main {
             i++;
         }
         return graph;
+    }
+
+    public static Stage getStage() {
+        return stage;
     }
 }

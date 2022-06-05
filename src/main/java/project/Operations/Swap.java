@@ -1,9 +1,9 @@
-package Operations;
+package project.Operations;
 
-import Model.Depot;
-import Model.Graph;
-import Model.Node;
-import Model.Vehicule;
+import project.Model.Depot;
+import project.Model.Graph;
+import project.Model.Node;
+import project.Model.Vehicule;
 
 import java.util.ArrayList;
 import java.util.List;

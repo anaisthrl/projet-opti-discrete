@@ -1,4 +1,4 @@
-package Model;
+package project.Model;
 
 public class Vehicule {
     public static int MAX_CAPACITY = 100;
@@ -42,7 +42,7 @@ public class Vehicule {
     /**
      * @return la longueur totale du chemin
      */
-    public double longueur() {
+    public double getLongueur() {
         if (tournee.changed || longueur == 0) {
             updateDistanceTournee();
         }

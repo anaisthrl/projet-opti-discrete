@@ -1,6 +1,6 @@
-package Operations;
+package project.Operations;
 
-import Model.Node;
+import project.Model.Node;
 
 import java.util.ArrayList;
 

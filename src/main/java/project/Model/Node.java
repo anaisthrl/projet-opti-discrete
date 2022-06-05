@@ -1,4 +1,4 @@
-package Model;
+package project.Model;
 
 public abstract class Node {
     private Point pos;

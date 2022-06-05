@@ -1,6 +1,6 @@
-package Operations;
+package project.Operations;
 
-import Model.*;
+import project.Model.*;
 
 import java.util.*;
 import java.util.stream.Collectors;

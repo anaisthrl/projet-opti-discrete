@@ -1,8 +1,8 @@
-package Operations;
+package project.Operations;
 
-import Model.Graph;
-import Model.Node;
-import Model.Vehicule;
+import project.Model.Graph;
+import project.Model.Node;
+import project.Model.Vehicule;
 
 public class TwoOpt extends Operation {
 

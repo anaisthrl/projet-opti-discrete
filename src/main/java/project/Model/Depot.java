@@ -1,4 +1,4 @@
-package Model;
+package project.Model;
 
 public class Depot extends Node {
     public Depot(int x, int y, int q, int i) {

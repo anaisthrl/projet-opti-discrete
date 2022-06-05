@@ -1,4 +1,4 @@
-package Model;
+package project.Model;
 
 import java.util.ArrayList;
 
@@ -32,6 +32,9 @@ public class Graph {
         return null;
     }
 
+    public Node getDepot() {
+        return this.nodes.get(0);
+    }
 
     public ArrayList<Node> getNodes() {
         return nodes;
@@ -47,5 +50,9 @@ public class Graph {
 
     public void setVehicules(ArrayList<Vehicule> vehicules) {
         this.vehicules = vehicules;
+    }
+
+    public double getFitness() {
+        return this.vehicules.stream().mapToDouble(Vehicule::getLongueur).sum();
     }
 }

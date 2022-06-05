@@ -1,6 +1,6 @@
-package Operations;
+package project.Operations;
 
-import Model.Graph;
+import project.Model.Graph;
 
 public abstract class Operation {
     public abstract void apply(Graph graph);
