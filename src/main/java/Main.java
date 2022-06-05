@@ -90,7 +90,7 @@ public class Main {
                     encorePlace = false;
                 }
             }
-            vehicule.tournee.add(depot);
+            //vehicule.tournee.add(depot);
             graph.vehicules.add(vehicule);
         }
         return graph;

@@ -1,3 +1,4 @@
+import Algorithms.Recuit;
 import Model.Graph;
 import Model.Node;
 import Model.Vehicule;
@@ -17,10 +18,12 @@ public class CVRP extends JFrame implements ActionListener {
     private int DECALAGE = 100;
     private int ZOOM = 6;
     private JButton btnDraw;
+    private Recuit recuit;
 
 
     public CVRP(Graph g){
         graph = g;
+        recuit = new Recuit(this.graph);
         setTitle("Représentation CVRP");
         setSize(1000,1000);
         setVisible(true);
@@ -58,10 +61,14 @@ public class CVRP extends JFrame implements ActionListener {
                 g.setColor(Color.BLACK);
                 if (graph.nodes.indexOf(previous) == 0) g.setColor(Color.RED);
                 //Pour chaque noeud on prend celui d'apres et on les relies
-                g.fillOval((previous.posX * ZOOM + DECALAGE) - ZOOM, (previous.posY * ZOOM + DECALAGE)- ZOOM, 10, 10);
+                g.fillOval((previous.getPos().getX() * ZOOM + DECALAGE) - ZOOM,
+                        (previous.getPos().getY() * ZOOM + DECALAGE)- ZOOM, 10, 10);
 
                 g.setColor(visitColor);
-                g.drawLine((previous.posX * ZOOM + DECALAGE)- ZOOM / 2, (previous.posY * ZOOM + DECALAGE)- ZOOM / 2, (current.posX * ZOOM + DECALAGE)- ZOOM / 2, (current.posY * ZOOM + DECALAGE)- ZOOM / 2);
+                g.drawLine((previous.getPos().getX() * ZOOM + DECALAGE)- ZOOM / 2,
+                        (previous.getPos().getY() * ZOOM + DECALAGE)- ZOOM / 2,
+                        (current.getPos().getX() * ZOOM + DECALAGE)- ZOOM / 2,
+                        (current.getPos().getY() * ZOOM + DECALAGE)- ZOOM / 2);
                 previous = current; //On garde en mémoire le noeud précedent
             }
         }
@@ -70,15 +77,15 @@ public class CVRP extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-
+        recuit.setGraph(this.graph);
         if (source == btnDraw) {
             System.out.println("re Paint");
-            try {
-                this.graph = Main.load(Main.paths[0]);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            Main.genAleatoire(this.graph);
+            //this.graph = Main.load(Main.paths[0]);
+            recuit.update();
+            this.graph = recuit.getGraph();
+
+            //Main.genAleatoire(this.graph);
+
 
             this.repaint();
         }

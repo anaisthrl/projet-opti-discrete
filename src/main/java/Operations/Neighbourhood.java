@@ -36,11 +36,11 @@ public class Neighbourhood {
         rand_type -= w_swap;
         if (rand_type < w_2opt) {
             final Vehicule vehicule = solution.getVehicules().get(random.nextInt(solution.getVehicules().size()));
-            final int chemin$size = vehicule.tournee.size() - 2;
+            final int tourneeSize = vehicule.tournee.size() - 2;
 
             return new TwoOpt(
-                    vehicule.tournee.get(random.nextInt(chemin$size) + 1),
-                    vehicule.tournee.get(random.nextInt(chemin$size) + 1)
+                    vehicule.tournee.get(random.nextInt(tourneeSize) + 1),
+                    vehicule.tournee.get(random.nextInt(tourneeSize) + 1)
             );
         }
         rand_type -= w_2opt;
