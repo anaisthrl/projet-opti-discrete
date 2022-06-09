@@ -25,12 +25,12 @@ public class Neighbourhood {
         double rand_type = random.nextDouble() * w_sum;
 
         final List<Node> nodes = solution.getNodes();
-        final int points$size = nodes.size();
+        final int nodeSize = nodes.size();
 
         if (rand_type < w_swap) {
             return new Swap(
-                    nodes.get(random.nextInt(points$size - 1) + 1),
-                    nodes.get(random.nextInt(points$size - 1) + 1)
+                    nodes.get(random.nextInt(nodeSize - 1) + 1),
+                    nodes.get(random.nextInt(nodeSize - 1) + 1)
             );
         }
         rand_type -= w_swap;
@@ -45,9 +45,9 @@ public class Neighbourhood {
         }
         rand_type -= w_2opt;
         if (rand_type < w_pathSwap) {
-            return new Swap(
-                    nodes.get(random.nextInt(points$size - 1) + 1),
-                    nodes.get(random.nextInt(points$size - 1) + 1)
+            return new SwapChemin(
+                    nodes.get(random.nextInt(nodeSize - 1) + 1),
+                    nodes.get(random.nextInt(nodeSize - 1) + 1)
             );
         }
 

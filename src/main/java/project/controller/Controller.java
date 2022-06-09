@@ -1,7 +1,10 @@
 package project.controller;
 
+import javafx.application.Platform;
 import project.Algorithms.Algorithm;
+import project.Algorithms.Algorithme;
 import project.Algorithms.Random;
+import project.Algorithms.Recuit;
 import project.Main;
 import project.Model.Graph;
 import project.Model.Node;
@@ -68,12 +71,16 @@ public class Controller implements Initializable {
 
     @FXML private ComboBox algoTypeSelect;
     @FXML private Button startSimulationBtn;
+    @FXML private Button startSimulationWhile;
 
     @FXML private CheckBox chkbox2Opt;
     @FXML private CheckBox chkboxExchange;
     @FXML private CheckBox chkboxRelocate;
 
     private Graph currentGraph;
+    private Algorithme algorithme;
+    private boolean stopAlgo;
+    private double tempsAttente = 10;
 
 
     @Override
@@ -123,17 +130,18 @@ public class Controller implements Initializable {
     }
 
     public void loadGraph(File file) throws IOException {
-        Graph graph = Main.load(file);
-        for (int i = 0; i < graph.nodes.size(); i++) {
+        this.currentGraph = Main.load(file);
+        for (int i = 0; i < this.currentGraph.nodes.size(); i++) {
             System.out.println("index : " + i + "; "
-                    + " x : " + graph.nodes.get(i).getPos().getX() + "; "
-                    + " y : " + graph.nodes.get(i).getPos().getY() + "; "
-                    + " q : " + graph.nodes.get(i).getPoids());
+                    + " x : " + this.currentGraph.nodes.get(i).getPos().getX() + "; "
+                    + " y : " + this.currentGraph.nodes.get(i).getPos().getY() + "; "
+                    + " q : " + this.currentGraph.nodes.get(i).getPoids());
         }
+        Random.genAleatoire(this.currentGraph);
         this.graphZoneLabel.setVisible(false);
         this.graphPane.getChildren().clear();
         this.updateGraphStats();
-        this.drawGraph(graph);
+        this.drawGraph(this.currentGraph);
     }
 
     public void updateGraphStats() {
@@ -157,6 +165,7 @@ public class Controller implements Initializable {
 
     @FXML
     public void startSimulation() {
+        stopAlgo =true;
         if(currentGraph == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
@@ -171,7 +180,7 @@ public class Controller implements Initializable {
         Object selectedItem = algoTypeSelect.getSelectionModel().getSelectedItem();
 
         if (Algorithm.RECUIT.equals(selectedItem)) {
-            drawGraph(Random.genAleatoire(currentGraph));
+            this.algorithme = new Recuit(currentGraph);
         }
         /*else if(Algorithm.TABOU.equals(selectedItem)){
             TransfoElementaire t = new TransfoElementaire(currentGraph);
@@ -179,12 +188,74 @@ public class Controller implements Initializable {
         }*/
     }
 
+    @FXML
+    public void startSimulationWhile() {
+        if(currentGraph == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez d'abord importer un graphe.");
+            alert.showAndWait();
+            return;
+        }
+
+        loadingPane.setVisible(true);
+
+        Object selectedItem = algoTypeSelect.getSelectionModel().getSelectedItem();
+
+        if (Algorithm.RECUIT.equals(selectedItem)) {
+            System.out.println("recuit");
+            this.algorithme = new Recuit(currentGraph);
+            drawGraphWhile();
+        }
+        /*else if(Algorithm.TABOU.equals(selectedItem)){
+            TransfoElementaire t = new TransfoElementaire(currentGraph);
+            drawGraph(t.simulatedAnnealing(1000000,0.9f));
+        }*/
+    }
+
+    public void drawGraphWhile() {
+        Thread algo_thread = new Thread(() -> {
+            long attentemili = 0;
+            int attenteNano = 0;
+            stopAlgo = false;
+            while (!stopAlgo) {
+                try {
+                    Thread.sleep(attentemili, attenteNano);
+                    synchronized (this) {
+                        algorithme.update();
+                        this.currentGraph = this.algorithme.getGraph();
+                        attentemili = (long) tempsAttente;
+                        attenteNano = (int) (tempsAttente - attentemili);
+                    }
+                } catch (Exception ignored) {
+                }
+                Platform.runLater(() -> {
+                    synchronized (this) {
+                        //group.getChildren().clear();
+                        statFitness.setText(String.format("Longueur : %.3f", this.currentGraph.getFitness()));
+                        drawGraph(currentGraph);
+                        //this.detailsController.addDistance(solution.longueur());
+                    }
+                });
+            }
+            Platform.runLater(() -> {
+                synchronized (this) {
+                    System.out.println("Stop");
+                   // group.getChildren().clear();
+                    statFitness.setText(String.format("Longueur : %.3f", algorithme.stop().getFitness()));
+                    drawGraph(algorithme.stop());
+                }
+            });
+        });
+        algo_thread.start();
+    }
+
 
 
     public void drawGraph(Graph graph) {
-        System.out.println("je passe dans le draw");
+        System.out.println(graph.getFitness());
         this.graphPane.getChildren().clear();
-        this.currentGraph = graph;
         this.updateGraphStats();
 
         int colorIndex = 0;
@@ -228,12 +299,6 @@ public class Controller implements Initializable {
         // Test other stuff here...
     }
 
-//    @FXML
-//    public void handleGraphPaneScroll(ScrollEvent scrollEvent) {
-//        double zoomRatio = scrollEvent.getDeltaY() > 0 ? 1.10 : 0.90;
-//        setZoomLevel(graphPane.getScaleX() * zoomRatio);
-//    }
-
     @FXML
     public void handleGraphPanePressed(MouseEvent mouseEvent) {
         dragXOffset = mouseEvent.getX();
@@ -261,24 +326,6 @@ public class Controller implements Initializable {
             graphPane.setScaleX(value);
             graphPane.setScaleY(value);
         }
-    }
-
-    @FXML
-    public void graphGrowthPlus() {
-        if(currentGraph == null || GRAPH_GROWTH >= 10) return;
-        centerGraph();
-        GRAPH_GROWTH++;
-        drawGraph(currentGraph);
-        graphGrowthTxt.setText(Integer.toString(GRAPH_GROWTH));
-    }
-
-    @FXML
-    public void graphGrowthMinus() {
-        if(currentGraph == null || GRAPH_GROWTH <= 1) return;
-        centerGraph();
-        GRAPH_GROWTH--;
-        drawGraph(currentGraph);
-        graphGrowthTxt.setText(Integer.toString(GRAPH_GROWTH));
     }
 
 

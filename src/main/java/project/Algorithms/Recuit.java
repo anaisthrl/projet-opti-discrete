@@ -6,7 +6,7 @@ import project.Operations.Operation;
 
 import java.util.Random;
 
-public class Recuit {
+public class Recuit implements Algorithme{
     private Graph graph;
     private double temp;
     private double mu = 0.9;
@@ -31,12 +31,12 @@ public class Recuit {
     }
 
     public void update() {
-        final double f = graph.getNodes().size();
+        final double f = graph.getFitness();
 
         final Operation operation = neighbourhood.getRandomVoisinage(graph);
 
         operation.apply(graph);
-        final double new_f = graph.getNodes().size();
+        final double new_f = graph.getFitness();
         final double delta_f = new_f - f;
 
         if (delta_f > 0) {
@@ -53,6 +53,8 @@ public class Recuit {
             temp *= this.mu;
             n1_i++;
         }
+
+
     }
 
     public Graph getGraph() {

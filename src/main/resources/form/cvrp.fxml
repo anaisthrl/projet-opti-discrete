@@ -109,7 +109,7 @@
                                                 <Label fx:id="loadingPercentage" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="224.0" text="0%" />
                                              </children>
                                           </AnchorPane>
-                                          <Button fx:id="startSimulationBtn" layoutX="16.0" layoutY="455.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Pas à pas" AnchorPane.leftAnchor="16.0" />
+                                          <Button fx:id="startSimulationBtn" layoutX="16.0" layoutY="455.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Stop" AnchorPane.leftAnchor="16.0" />
                                           <Label layoutX="21.0" layoutY="223.0" text="Nombre de véhicules : " />
                                           <Label fx:id="statNbVehicles" layoutX="143.0" layoutY="223.0" text="0" />
                                           <CheckBox fx:id="chkbox2Opt" layoutX="18.0" layoutY="341.0" mnemonicParsing="false" text="2-opt" visible="false" />
@@ -123,7 +123,7 @@
                                           <Separator layoutY="420.0" prefHeight="18.0" prefWidth="251.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                           <Label layoutX="21.0" layoutY="240.0" text="Fitness :" />
                                           <Label fx:id="statFitness" layoutX="66.0" layoutY="240.0" text="n/a" />
-                                          <Button fx:id="startSimulationBtn1" layoutX="16.0" layoutY="488.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Lancer" />
+                                          <Button fx:id="startSimulationWhile" layoutX="16.0" layoutY="488.0" mnemonicParsing="false" onAction="#startSimulationWhile" prefHeight="25.0" prefWidth="221.0" text="Lancer" />
                                        </children>
                                     </AnchorPane>
                               </content>
@@ -132,7 +132,7 @@
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <CheckBox fx:id="arrowCheckbox" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="204.0" selected="true" text="Afficher les flèches" AnchorPane.leftAnchor="16.0" />
+                                          <CheckBox fx:id="arrowCheckbox" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="204.0" selected="false" text="Afficher les flèches" AnchorPane.leftAnchor="16.0" />
                                           <CheckBox fx:id="colorCheckbox" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="204.0" selected="true" text="Afficher les couleurs" AnchorPane.leftAnchor="16.0" />
                                           <Button layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#centerGraph" text="Recentrer le graphe" AnchorPane.leftAnchor="16.0" />
                                           <Label layoutX="16.0" layoutY="101.0" text="Expansion du graphe">
@@ -140,9 +140,7 @@
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Button layoutX="51.0" layoutY="118.0" mnemonicParsing="false" onAction="#graphGrowthPlus" prefHeight="25.0" prefWidth="30.0" text="+" />
-                                          <Button layoutX="16.0" layoutY="118.0" mnemonicParsing="false" onAction="#graphGrowthMinus" prefHeight="25.0" prefWidth="30.0" text="-" />
-                                          <TextField fx:id="graphGrowthTxt" disable="true" layoutX="90.0" layoutY="118.0" prefHeight="25.0" prefWidth="45.0" text="5" />
+                                           <TextField fx:id="graphGrowthTxt" disable="true" layoutX="90.0" layoutY="118.0" prefHeight="25.0" prefWidth="45.0" text="5" />
                                        </children>
                                     </AnchorPane>
                               </content>

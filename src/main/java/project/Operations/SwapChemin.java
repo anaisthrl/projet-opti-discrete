@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Swap extends Operation {
+public class SwapChemin extends Operation {
     private final Node a;
     private final Node b;
 
-    public Swap(Node a, Node b) {
+    public SwapChemin(Node a, Node b) {
         if (a instanceof Depot) throw new IllegalArgumentException("A cannot be Depot");
         if (b instanceof Depot) throw new IllegalArgumentException("B cannot be Depot");
 
@@ -32,8 +32,14 @@ public class Swap extends Operation {
         final int iA = vA.tournee.indexOf(a);
         final int iB = vB.tournee.indexOf(b);
 
-        vA.tournee.set(iA, b);
-        vB.tournee.set(iB, a);
+        List<Node> subPathA =  vA.tournee.subList(iA,  vA.tournee.size());
+        List<Node> subPathB =  vB.tournee.subList(iB,  vB.tournee.size());
+
+        List<Node> tmp = new ArrayList<>(subPathA);
+        subPathA.clear();
+        vA.tournee.addAll(subPathB);
+        subPathB.clear();
+        vB.tournee.addAll(tmp);
     }
 
     @Override
@@ -41,13 +47,6 @@ public class Swap extends Operation {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Swap swap = (Swap) o;
-        return Objects.equals(a, swap.a) && Objects.equals(b, swap.b);
-    }
 
     @Override
     public int hashCode() {
