@@ -183,7 +183,7 @@ public class Controller implements Initializable {
             drawGraph(this.currentGraph);
         }
         else if(Algorithm.TABOU.equals(selectedItem)){
-            TabuSearch tabuSearch = new TabuSearch(15);
+            TabuSearch tabuSearch = new TabuSearch(5);
             this.currentGraph = tabuSearch.tabuNum2(this.currentGraph, 10000);
             drawGraph(this.currentGraph);
         }

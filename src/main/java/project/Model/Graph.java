@@ -1,6 +1,7 @@
 package project.Model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,5 +61,17 @@ public class Graph {
 
     public double getFitness() {
         return this.vehicules.stream().mapToDouble(Vehicule::getLongueur).sum();
+    }
+
+    public Graph cloneMap() {
+
+        ArrayList<Vehicule> veh = new ArrayList<>();
+        for (Vehicule v : this.vehicules) {
+            Vehicule vehicle = new Vehicule();
+            vehicle.setTournee(new ArrayList<>(v.tournee));
+            veh.add(vehicle);
+        }
+
+        return new Graph(new ArrayList<>(this.getNodes()), veh);
     }
 }
