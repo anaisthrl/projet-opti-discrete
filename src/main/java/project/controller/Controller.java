@@ -1,10 +1,7 @@
 package project.controller;
 
 import javafx.application.Platform;
-import project.Algorithms.Algorithm;
-import project.Algorithms.Algorithme;
-import project.Algorithms.Random;
-import project.Algorithms.Recuit;
+import project.Algorithms.*;
 import project.Main;
 import project.Model.Graph;
 import project.Model.Node;
@@ -148,7 +145,7 @@ public class Controller implements Initializable {
         if(currentGraph == null) return;
 
         this.statNbVehicles.setText(currentGraph.getVehicules().size() + "");
-        this.statFitness.setText(new DecimalFormat("#0.00").format(currentGraph.getFitness()));
+        this.statFitness.setText(new DecimalFormat("#0.00").format(Math.sqrt(currentGraph.getFitness())));
     }
 
     @FXML
@@ -208,10 +205,10 @@ public class Controller implements Initializable {
             this.algorithme = new Recuit(currentGraph);
             drawGraphWhile();
         }
-        /*else if(Algorithm.TABOU.equals(selectedItem)){
-            TransfoElementaire t = new TransfoElementaire(currentGraph);
-            drawGraph(t.simulatedAnnealing(1000000,0.9f));
-        }*/
+        else if(Algorithm.TABOU.equals(selectedItem)){
+            this.algorithme = new Tabu(currentGraph);
+            drawGraphWhile();
+        }
     }
 
     public void drawGraphWhile() {

@@ -13,7 +13,8 @@ public class Vehicule {
     }
 
     public double getDistanceBetween2Node(Node a, Node b) {
-        return Math.sqrt(Math.pow(a.getPos().getX() - b.getPos().getX(), 2) + Math.pow(a.getPos().getY() - b.getPos().getY(), 2));
+        //pas sqrt pour gagner temps
+        return Math.pow(a.getPos().getX() - b.getPos().getX(), 2) + Math.pow(a.getPos().getY() - b.getPos().getY(), 2);
     }
 
     public void updateDistanceTournee() {
