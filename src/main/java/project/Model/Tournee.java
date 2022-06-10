@@ -1,9 +1,12 @@
 package project.Model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class Tournee extends ArrayList<Node> {
     public boolean changed = false;
+    //private final List<Node> nodes = new ArrayList<>();
 
     public ArrayList<Node> getTournee() {
         return this;

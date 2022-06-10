@@ -1,6 +1,8 @@
 package project.Model;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Graph {
     public ArrayList<Node> nodes;
@@ -23,7 +25,7 @@ public class Graph {
         return null;
     }
 
-    public Vehicule getVehiculeFromTournee(Tournee _tournee) {
+    public Vehicule getVehiculeFromTournee(List<Node> _tournee) {
         for (final Vehicule vehicule : vehicules) {
             if (vehicule.tournee.equals(_tournee)) {
                 return vehicule;
@@ -46,6 +48,10 @@ public class Graph {
 
     public ArrayList<Vehicule> getVehicules() {
         return vehicules;
+    }
+
+    public ArrayList<Vehicule> cloneVehicules() {
+        return (ArrayList<Vehicule>) this.vehicules.stream().map(Vehicule::clone).collect(Collectors.toList());
     }
 
     public void setVehicules(ArrayList<Vehicule> vehicules) {

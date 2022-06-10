@@ -5,15 +5,13 @@ import project.Model.Graph;
 import project.Model.Node;
 import project.Model.Vehicule;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-public class Swap extends Operation {
+public class SwapInter extends Operation {
     private final Node a;
     private final Node b;
 
-    public Swap(Node a, Node b) {
+    public SwapInter(Node a, Node b) {
         if (a instanceof Depot) throw new IllegalArgumentException("A cannot be Depot");
         if (b instanceof Depot) throw new IllegalArgumentException("B cannot be Depot");
 
@@ -32,21 +30,24 @@ public class Swap extends Operation {
         final int iA = vA.tournee.indexOf(a);
         final int iB = vB.tournee.indexOf(b);
 
-        vA.tournee.set(iA, b);
-        vB.tournee.set(iB, a);
+        if (graph.getVehiculeContaining(a).getNbColis() + a.getPoids() <= Vehicule.MAX_CAPACITY
+                && graph.getVehiculeContaining(b).getNbColis() + a.getPoids() <= Vehicule.MAX_CAPACITY) {
+            vA.tournee.set(iA, b);
+            vB.tournee.set(iB, a);
+        }
     }
 
     @Override
     public Operation revert() {
-        return this;
+        return new SwapInter(this.b, this.a);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Swap swap = (Swap) o;
-        return Objects.equals(a, swap.a) && Objects.equals(b, swap.b);
+        SwapInter swapInter = (SwapInter) o;
+        return Objects.equals(a, swapInter.a) && Objects.equals(b, swapInter.b);
     }
 
     @Override

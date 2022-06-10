@@ -1,9 +1,11 @@
 package project.Algorithms;
 
 import project.Model.Graph;
+import project.Model.Vehicule;
 import project.Operations.Neighbourhood;
 import project.Operations.Operation;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Recuit implements Algorithme{
@@ -53,8 +55,35 @@ public class Recuit implements Algorithme{
             temp *= this.mu;
             n1_i++;
         }
+    }
 
+    public Graph recuitSimule(int maxIteration, float variation) {
+        ArrayList<Vehicule> currentSolution;
+        double latestFitness = this.graph.getFitness();
+        double temperature = 1000;
+        Operation operation;
+        int nbTemp = (int)(Math.log(Math.log(0.8) / Math.log(0.01))/Math.log(variation) )* 3; //Nb changement de temperature
+        System.out.println("nb temp : " + nbTemp);
+        for (int i = 0; i < nbTemp; i++){
+            for (int j = 0; j < maxIteration; j++) {
+                currentSolution = this.graph.cloneVehicules();
+                operation = neighbourhood.getRandomVoisinage(graph);
+                if(operation.isValid(graph)){
+                    operation.apply(graph);
 
+                }
+                double currentTotalFitness = graph.getFitness();
+                double delta = currentTotalFitness - latestFitness;
+                if (delta < 0 || (random.nextDouble() < Math.exp(-delta / temperature))) {
+                    latestFitness = currentTotalFitness;
+                    //this.graph = g;
+                } else {
+                    operation.revert().apply(graph);
+                }
+                temperature = variation * temperature;
+            }
+        }
+        return this.graph;
     }
 
     public Graph getGraph() {

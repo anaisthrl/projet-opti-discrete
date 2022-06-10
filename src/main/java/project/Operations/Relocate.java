@@ -1,20 +1,24 @@
 package project.Operations;
 
-import project.Model.*;
+import project.Model.Depot;
+import project.Model.Graph;
+import project.Model.Node;
+import project.Model.Vehicule;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
 public class Relocate extends Operation {
 
     private final static Random random = new Random();
-    private final Tournee firstTournee;
-    private final Tournee secTournee;
+    private final List<Node> firstTournee;
+    private final List<Node> secTournee;
     private final Node node;
     private final Integer startPoint;
     private final Integer endPoint;
 
-    public Relocate(Tournee tournee1, Tournee tournee2, Node node) {
+    public Relocate(List<Node> tournee1, List<Node> tournee2, Node node) {
         this.firstTournee = tournee1;
         this.secTournee = tournee2;
         this.node = node;
@@ -25,7 +29,7 @@ public class Relocate extends Operation {
         }
     }
 
-    private Relocate(Tournee tournee1, Tournee tournee2, Node node, int startPoint, int endPoint) {
+    private Relocate(List<Node> tournee1, List<Node> tournee2, Node node, int startPoint, int endPoint) {
         this.firstTournee = tournee1;
         this.secTournee = tournee2;
         this.node = node;
@@ -38,8 +42,11 @@ public class Relocate extends Operation {
 
     @Override
     public void apply(Graph graph) {
-        this.firstTournee.remove(node);
-        this.secTournee.add(endPoint, node);
+        if (graph.getVehiculeFromTournee(secTournee).getNbColis() + node.getPoids() <= Vehicule.MAX_CAPACITY) {
+            this.firstTournee.remove(node);
+            this.secTournee.add(endPoint, node);
+        }
+
     }
 
     @Override

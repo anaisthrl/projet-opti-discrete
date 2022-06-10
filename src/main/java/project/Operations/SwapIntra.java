@@ -5,17 +5,13 @@ import project.Model.Graph;
 import project.Model.Node;
 import project.Model.Vehicule;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-public class SwapChemin extends Operation {
+public class SwapIntra extends Operation {
     private final Node a;
     private final Node b;
 
-    public SwapChemin(Node a, Node b) {
-        if (a instanceof Depot) throw new IllegalArgumentException("A cannot be Depot");
-        if (b instanceof Depot) throw new IllegalArgumentException("B cannot be Depot");
+    public SwapIntra(Node a, Node b) {
 
         this.a = a;
         this.b = b;
@@ -28,25 +24,29 @@ public class SwapChemin extends Operation {
 
         if (vA == null) throw new IllegalArgumentException("Node A not in solution");
         if (vB == null) throw new IllegalArgumentException("Node B not in solution");
+        if (vA == vB) {
+            if (!(a instanceof Depot)) {
+                final int iA = vA.tournee.indexOf(a);
+                final int iB = vA.tournee.indexOf(b);
 
-        final int iA = vA.tournee.indexOf(a);
-        final int iB = vB.tournee.indexOf(b);
-
-        List<Node> subPathA =  vA.tournee.subList(iA,  vA.tournee.size());
-        List<Node> subPathB =  vB.tournee.subList(iB,  vB.tournee.size());
-
-        List<Node> tmp = new ArrayList<>(subPathA);
-        subPathA.clear();
-        vA.tournee.addAll(subPathB);
-        subPathB.clear();
-        vB.tournee.addAll(tmp);
+                vA.tournee.set(iA, b);
+                vA.tournee.set(iB, a);
+            }
+        }
     }
 
     @Override
     public Operation revert() {
-        return this;
+        return new SwapIntra(this.b, this.a);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SwapIntra swapIntra = (SwapIntra) o;
+        return Objects.equals(a, swapIntra.a) && Objects.equals(b, swapIntra.b);
+    }
 
     @Override
     public int hashCode() {

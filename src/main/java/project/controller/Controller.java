@@ -40,7 +40,7 @@ public class Controller implements Initializable {
     private final static int POINT_RADIUS = 5;
     private final static int ARROW_HEAD_SIZE = 10;
     private final static List<Color> AVAILABLE_COLORS = Arrays.asList(Color.RED, Color.ORANGE,
-            Color.GREEN, Color.BLUE, Color.DARKGREEN,  Color.CORNFLOWERBLUE,Color.CRIMSON, Color.VIOLET);
+            Color.GREEN, Color.BLUE, Color.VIOLET, Color.CORNFLOWERBLUE,Color.CRIMSON,Color.FUCHSIA);
 
     @FXML
     private AnchorPane graphPane;
@@ -145,7 +145,7 @@ public class Controller implements Initializable {
         if(currentGraph == null) return;
 
         this.statNbVehicles.setText(currentGraph.getVehicules().size() + "");
-        this.statFitness.setText(new DecimalFormat("#0.00").format(Math.sqrt(currentGraph.getFitness())));
+        this.statFitness.setText(new DecimalFormat("#0.00").format(currentGraph.getFitness()));
     }
 
     @FXML
@@ -177,17 +177,34 @@ public class Controller implements Initializable {
         Object selectedItem = algoTypeSelect.getSelectionModel().getSelectedItem();
 
         if (Algorithm.RECUIT.equals(selectedItem)) {
-            this.algorithme = new Recuit(currentGraph);
+           // this.algorithme = new Recuit(currentGraph);
+            RecuitSimule recuitSimule = new RecuitSimule();
+            recuitSimule.recuitSimule(currentGraph, 10000, 0.5f, 1000.0);
+            drawGraph(this.currentGraph);
         }
-        /*else if(Algorithm.TABOU.equals(selectedItem)){
-            TransfoElementaire t = new TransfoElementaire(currentGraph);
-            drawGraph(t.simulatedAnnealing(1000000,0.9f));
-        }*/
+        else if(Algorithm.TABOU.equals(selectedItem)){
+            TabuSearch tabuSearch = new TabuSearch(15);
+            this.currentGraph = tabuSearch.tabuNum2(this.currentGraph, 10000);
+            drawGraph(this.currentGraph);
+        }
+        for (Vehicule vehicule : currentGraph.vehicules) {
+            //tableau index AT
+            ArrayList<Integer> arIndex = new ArrayList<>();
+
+            System.out.println("NbColis du vehicule : " + vehicule.nbColis);
+            for(Node node : vehicule.tournee) {
+                System.out.print(currentGraph.nodes.indexOf(node) + " ");
+                //AT
+                arIndex.add(currentGraph.nodes.indexOf(node));
+            }
+            System.out.print("\n");
+            System.out.println("Distance de la tournee : " + vehicule.longueur);
+        }
     }
 
     @FXML
     public void startSimulationWhile() {
-        if(currentGraph == null) {
+     /*   if(currentGraph == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setHeaderText(null);
@@ -216,12 +233,14 @@ public class Controller implements Initializable {
             long attentemili = 0;
             int attenteNano = 0;
             stopAlgo = false;
-            while (!stopAlgo) {
+            int i = 0;
+            while (!stopAlgo || i < 1000) {
+                i++;
                 try {
                     Thread.sleep(attentemili, attenteNano);
                     synchronized (this) {
                         algorithme.update();
-                        this.currentGraph = this.algorithme.getGraph();
+                        //this.currentGraph = this.algorithme.getGraph();
                         attentemili = (long) tempsAttente;
                         attenteNano = (int) (tempsAttente - attentemili);
                     }
@@ -230,12 +249,13 @@ public class Controller implements Initializable {
                 Platform.runLater(() -> {
                     synchronized (this) {
                         //group.getChildren().clear();
-                        statFitness.setText(String.format("Longueur : %.3f", this.currentGraph.getFitness()));
-                        drawGraph(currentGraph);
+                        statFitness.setText(String.format("Longueur : %.3f", this.algorithme.getGraph().getFitness()));
+                        //drawGraph(currentGraph);
                         //this.detailsController.addDistance(solution.longueur());
                     }
                 });
             }
+            System.out.println( this.algorithme.getGraph().getFitness());
             Platform.runLater(() -> {
                 synchronized (this) {
                     System.out.println("Stop");
@@ -245,13 +265,12 @@ public class Controller implements Initializable {
                 }
             });
         });
-        algo_thread.start();
+        algo_thread.start();*/
     }
 
 
 
     public void drawGraph(Graph graph) {
-        System.out.println(graph.getFitness());
         this.graphPane.getChildren().clear();
         this.updateGraphStats();
 
@@ -262,7 +281,7 @@ public class Controller implements Initializable {
 
         for (Vehicule vehicule : graph.getVehicules()) {
             this.setLoading(0.5f);
-            ArrayList<Node> listClient = vehicule.tournee.getTournee();
+            ArrayList<Node> listClient = (ArrayList<Node>) vehicule.tournee;
             Color color = AVAILABLE_COLORS.get(colorIndex % AVAILABLE_COLORS.size());
             Node previous = graph.getDepot();
 

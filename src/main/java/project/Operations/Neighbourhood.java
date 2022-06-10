@@ -11,47 +11,72 @@ public class Neighbourhood {
 
     //RECUIT
 
-    private final double w_swap = 1;
-    private final double w_2opt = 2;
-    private final double w_pathSwap = 0;
-    private double w_sum = 0;
+    private final int swap_inter = 0;
+    private final int swap_intra = 1;
+    private final int twoopt = 2;
+    private final int relocate = 3;;
 
     public Neighbourhood() {
-        w_sum = w_swap + w_2opt + w_pathSwap;
+
     }
 
 
-    public Operation getRandomVoisinage(Graph solution) {
-        double rand_type = random.nextDouble() * w_sum;
+    public Operation getRandomVoisinage(Graph graph) {
+        int randOperation = random.nextInt(4);
 
-        final List<Node> nodes = solution.getNodes();
+        final List<Node> nodes = graph.getNodes();
         final int nodeSize = nodes.size();
+        Vehicule vehicule;
+        int tourneeSize;
 
-        if (rand_type < w_swap) {
-            return new Swap(
-                    nodes.get(random.nextInt(nodeSize - 1) + 1),
-                    nodes.get(random.nextInt(nodeSize - 1) + 1)
-            );
-        }
-        rand_type -= w_swap;
-        if (rand_type < w_2opt) {
-            final Vehicule vehicule = solution.getVehicules().get(random.nextInt(solution.getVehicules().size()));
-            final int tourneeSize = vehicule.tournee.size() - 2;
+        switch (randOperation) {
+            case swap_inter:
+                return new SwapInter(
+                        nodes.get(random.nextInt(nodeSize - 1) + 1),
+                        nodes.get(random.nextInt(nodeSize - 1) + 1)
+                );
+            case swap_intra:
+                vehicule = graph.getVehicules().get(random.nextInt(graph.getVehicules().size()));
+                tourneeSize = vehicule.tournee.size() - 2;
+                if(tourneeSize < 2){
+                    final Node node1 =getRandomPoint(graph);
+                    return new Relocate(
+                            graph.getVehiculeContaining(node1).tournee,
+                            graph.getVehiculeContaining(getRandomPoint(graph)).tournee,
+                            node1);
+                }
+                return new SwapIntra(
+                        vehicule.tournee.get(random.nextInt(tourneeSize-1) +1),
+                        vehicule.tournee.get(random.nextInt(tourneeSize-1) +1)
+                );
+            case twoopt:
+                vehicule = graph.getVehicules().get(random.nextInt(graph.getVehicules().size()));
+                tourneeSize = vehicule.tournee.size() - 2;
+                if(tourneeSize < 2){
+                    final Node node1 = getRandomPoint(graph);
+                    return new Relocate(
+                            graph.getVehiculeContaining(node1).tournee,
+                            graph.getVehiculeContaining(getRandomPoint(graph)).tournee,
+                            node1);
+                }
+                return new TwoOpt(
+                        vehicule.tournee.get(random.nextInt(tourneeSize-1) +1),
+                        vehicule.tournee.get(random.nextInt(tourneeSize-1) +1)
+                );
+            case relocate:
+                final Node node1 =getRandomPoint(graph);
+                final Node node2 =getRandomPoint(graph);
+                return new Relocate(
+                        graph.getVehiculeContaining(node1).tournee,
+                        graph.getVehiculeContaining(node2).tournee,
+                        node1);
+            default:
+                return new SwapInter(
+                        nodes.get(random.nextInt(nodeSize - 1) + 1),
+                        nodes.get(random.nextInt(nodeSize - 1) + 1)
+                );
 
-            return new TwoOpt(
-                    vehicule.tournee.get(random.nextInt(tourneeSize) + 1),
-                    vehicule.tournee.get(random.nextInt(tourneeSize) + 1)
-            );
         }
-        rand_type -= w_2opt;
-        if (rand_type < w_pathSwap) {
-            return new SwapChemin(
-                    nodes.get(random.nextInt(nodeSize - 1) + 1),
-                    nodes.get(random.nextInt(nodeSize - 1) + 1)
-            );
-        }
-
-        return null;
     }
 
 
@@ -61,7 +86,7 @@ public class Neighbourhood {
         Node firstNode = getRandomPoint(graph);
         List<Operation> op = getClosestNodes(graph, firstNode, tailleVoisinage - 2)
                 .stream()
-                .map(point2 -> (Operation) new Swap(firstNode, point2))
+                .map(point2 -> (Operation) new SwapInter(firstNode, point2))
                 .filter(operation -> operation.isValid(graph))
                 .collect(Collectors.toList());
         op.addAll(bougerPointDeChemin(graph));
@@ -135,12 +160,12 @@ public class Neighbourhood {
      * @param tournee tournee dans lequel le node suivant ne dois pas se trouver
      * @return node le plus proche qui ne se trouve pas dans le tournee
      */
-    private Node getClosestNodeNotInTournee(Graph graph, Node node, Tournee tournee) {
+    private Node getClosestNodeNotInTournee(Graph graph, Node node, List<Node>  tournee) {
         //ALED LE TEMPS
 //		List<Point> allPoints = getAllPointsWithoutDepot(graph);
 //		return allPoints
 //				.stream()
-//				.filter(point1 -> !tournee.contains(point1))
+//				.filter(point1 -> !tournee.contains(point1))List<Node>
 //				.filter(point1 ->
 //						point1.distance(node) == allPoints.stream()
 //								.mapToDouble(point2 -> point2.distance(node))
