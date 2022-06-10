@@ -74,12 +74,12 @@ public class Relocate extends Operation {
 
     @Override
     public void apply(Graph graph) {
-        relocateIntra();
-        /*
+       // relocateIntra();
+
         if (graph.getVehiculeFromTournee(secTournee).getNbColis() + node.getPoids() <= Vehicule.MAX_CAPACITY) {
             this.firstTournee.remove(node);
             this.secTournee.add(endPoint, node);
-        }*/
+        }
 
     }
 

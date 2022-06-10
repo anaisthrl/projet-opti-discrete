@@ -192,12 +192,12 @@ public class Controller implements Initializable {
         if (Algorithm.RECUIT.equals(selectedItem)) {
            // this.algorithme = new Recuit(currentGraph);
             RecuitSimule recuitSimule = new RecuitSimule();
-            recuitSimule.recuitSimule(currentGraph, 10000, 0.1f, -300 / Math.log(0.8));
+            recuitSimule.recuitSimule(currentGraph, 10000, 0.5f, -300 / Math.log(0.8));
             drawGraph(this.currentGraph);
         }
         else if(Algorithm.TABOU.equals(selectedItem)){
             TabuSearch tabuSearch = new TabuSearch(5);
-            this.currentGraph = tabuSearch.tabuSearch(this.currentGraph, 10000,2);
+            this.currentGraph = tabuSearch.tabuNum2(this.currentGraph, 10000);
             drawGraph(this.currentGraph);
         }
         for (Vehicule vehicule : currentGraph.vehicules) {

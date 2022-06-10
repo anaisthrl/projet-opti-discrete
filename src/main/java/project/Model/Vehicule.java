@@ -65,8 +65,10 @@ public class Vehicule {
      * @return la longueur totale du chemin
      */
     public double getLongueur() {
-        updateDistanceTournee();
-        updateNbColis();
+        if(tournee.size() > 0) {
+            updateDistanceTournee();
+            updateNbColis();
+        }
         return longueur;
     }
 
