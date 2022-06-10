@@ -35,7 +35,7 @@ public class Recuit implements Algorithme{
     public void update() {
         final double f = graph.getFitness();
 
-        final Operation operation = neighbourhood.getRandomVoisinage(graph);
+        final Operation operation = neighbourhood.choixTransforAleatoire(graph);
 
         operation.apply(graph);
         final double new_f = graph.getFitness();
@@ -67,7 +67,7 @@ public class Recuit implements Algorithme{
         for (int i = 0; i < nbTemp; i++){
             for (int j = 0; j < maxIteration; j++) {
                 currentSolution = this.graph.cloneVehicules();
-                operation = neighbourhood.getRandomVoisinage(graph);
+                operation = neighbourhood.choixTransforAleatoire(graph);
                 if(operation.isValid(graph)){
                     operation.apply(graph);
 

@@ -7,13 +7,12 @@ import project.Operations.Operation;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class RecuitSimule {
     private static int N1 = 100;
     private static int N2 = 10000;
 
-    public Graph recuitSimule(Graph graph, int maxIteration, float mu, double temperature) {
+    public void recuitSimule(Graph graph, int maxIteration, float mu, double temperature) {
         final java.util.Random random = new Random();
 
         ArrayList<Vehicule> currentSolution;
@@ -26,23 +25,19 @@ public class RecuitSimule {
             for (int j = 0; j < maxIteration; j++) {
                 currentSolution = graph.cloneVehicules();
 
-                operation = neighbourhood.getRandomVoisinage(graph);
-
+                operation = neighbourhood.choixTransforAleatoire(graph);
                 operation.apply(graph);
 
                 double currentTotalFitness = graph.getFitness();
                 double delta = currentTotalFitness - latestFitness;
                 if (delta < 0 || (random.nextDouble() < Math.exp(-delta / temperature))) {
                     latestFitness = currentTotalFitness;
-                    //graph = g;
                 } else {
-                    //operation.revert().apply(graph);
                     graph.setVehicules(currentSolution);
                 }
                 temperature = mu * temperature;
             }
         }
-        return graph;
     }
 /*
     private Graph recuitSimule(Graph map, double mu) {

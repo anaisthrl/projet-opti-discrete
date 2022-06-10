@@ -40,14 +40,6 @@ public class TwoOpt extends Operation {
 
             final int min = Math.min(ia, ib) + 1;
             final int max = Math.max(ia, ib) - 1;
-/*
-        List<Node> clientCopy = new ArrayList<>(vehicule1.tournee.subList(min, max));
-        Collections.reverse(clientCopy);
-        List<Node> finalList = new ArrayList<>(vehicule1.tournee.subList(0, max));
-        finalList.addAll(clientCopy);
-        finalList.addAll(vehicule1.tournee.subList(min, vehicule1.tournee.size()));
-        graph.getVehiculeContaining(a).setTournee(new ArrayList<Node>(finalList));
-*/
 
             // inverser le centre du chemin
             for (int i = min; i < max; i++) {

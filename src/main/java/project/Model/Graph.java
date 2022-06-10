@@ -35,8 +35,8 @@ public class Graph {
         return null;
     }
 
-    public Node getDepot() {
-        return this.nodes.get(0);
+    public Depot getDepot() {
+        return (Depot) this.nodes.get(0);
     }
 
     public ArrayList<Node> getNodes() {
@@ -55,6 +55,10 @@ public class Graph {
         return (ArrayList<Vehicule>) this.vehicules.stream().map(Vehicule::clone).collect(Collectors.toList());
     }
 
+    public static ArrayList<Vehicule> cloneVehicles(ArrayList<Vehicule> vehicles) {
+        return (ArrayList<Vehicule>) vehicles.stream().map(Vehicule::clone).collect(Collectors.toList());
+    }
+
     public void setVehicules(ArrayList<Vehicule> vehicules) {
         this.vehicules = vehicules;
     }
@@ -63,11 +67,14 @@ public class Graph {
         return this.vehicules.stream().mapToDouble(Vehicule::getLongueur).sum();
     }
 
+    public static double getFitness(ArrayList<Vehicule> vehicles) {
+        return vehicles.stream().mapToDouble(Vehicule::getLongueur).sum();
+    }
     public Graph cloneMap() {
 
         ArrayList<Vehicule> veh = new ArrayList<>();
         for (Vehicule v : this.vehicules) {
-            Vehicule vehicle = new Vehicule();
+            Vehicule vehicle = new Vehicule(getDepot());
             vehicle.setTournee(new ArrayList<>(v.tournee));
             veh.add(vehicle);
         }

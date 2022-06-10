@@ -123,7 +123,7 @@
                                           <Separator layoutY="420.0" prefHeight="18.0" prefWidth="251.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                           <Label layoutX="21.0" layoutY="240.0" text="Fitness :" />
                                           <Label fx:id="statFitness" layoutX="66.0" layoutY="240.0" text="n/a" />
-                                          <Button fx:id="startSimulationWhile" layoutX="16.0" layoutY="488.0" mnemonicParsing="false" onAction="#startSimulationWhile" prefHeight="25.0" prefWidth="221.0" text="Lancer" />
+                                          <Button fx:id="startSimulation2" layoutX="16.0" layoutY="488.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Lancer" />
                                        </children>
                                     </AnchorPane>
                               </content>

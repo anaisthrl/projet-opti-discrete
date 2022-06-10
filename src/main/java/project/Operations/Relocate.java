@@ -5,6 +5,7 @@ import project.Model.Graph;
 import project.Model.Node;
 import project.Model.Vehicule;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -17,6 +18,16 @@ public class Relocate extends Operation {
     private final Node node;
     private final Integer startPoint;
     private final Integer endPoint;
+    private Graph graph;
+
+    public Relocate(Graph graph) {
+        this.firstTournee = new ArrayList<>();
+        this.secTournee = new ArrayList<>();
+        this.node = null;
+        this.startPoint = 0;
+        this.endPoint = 0;
+        this.graph = graph;
+    }
 
     public Relocate(List<Node> tournee1, List<Node> tournee2, Node node) {
         this.firstTournee = tournee1;
@@ -40,12 +51,35 @@ public class Relocate extends Operation {
         }
     }
 
+    public void relocateIntra() {
+        Vehicule vehicleToModify = this.graph.getVehicules().get(random.nextInt(this.graph.getVehicules().size()));
+
+        List<Node> visitToModify = vehicleToModify.tournee;
+
+        if (visitToModify.size() > 1) {
+            int clientToMoveIndex = random.nextInt(visitToModify.size());
+
+            if (!(vehicleToModify.tournee.get(clientToMoveIndex) instanceof Depot)) {
+                Node clientToMove = vehicleToModify.tournee.remove(clientToMoveIndex);
+                if (clientToMove instanceof Depot) {
+                    System.out.println("DEPOOOOOOOOOOT");
+                }
+                int insertIndex;
+                while ((insertIndex = random.nextInt(visitToModify.size() + 1)) == clientToMoveIndex) ;
+                vehicleToModify.tournee.add(insertIndex, clientToMove);
+            }
+        }
+
+    }
+
     @Override
     public void apply(Graph graph) {
+        relocateIntra();
+        /*
         if (graph.getVehiculeFromTournee(secTournee).getNbColis() + node.getPoids() <= Vehicule.MAX_CAPACITY) {
             this.firstTournee.remove(node);
             this.secTournee.add(endPoint, node);
-        }
+        }*/
 
     }
 

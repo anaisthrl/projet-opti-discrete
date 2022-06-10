@@ -5,8 +5,8 @@ import project.Model.Vehicule;
 import project.Operations.Neighbourhood;
 import project.Operations.Operation;
 
-import java.util.*;
 import java.util.Random;
+import java.util.*;
 
 public class TabuSearch {
     private final List<Operation> opmMoins1 = new ArrayList<>();
@@ -19,19 +19,19 @@ public class TabuSearch {
 
     }
 
-/*
+
     public Graph tabuSearch(Graph graph, int maximumIteration, int tabuLength) {
         final java.util.Random random = new Random();
 
-        ArrayList<Vehicule> bestSolution = graph.cloneVehicles();
+        ArrayList<Vehicule> bestSolution = graph.cloneVehicules();
         double latestFitness = graph.getFitness();
         double bestFitness = latestFitness;
         Queue<ArrayList<Vehicule>> tabuList = new LinkedList<>();
 
         ArrayList<ArrayList<Vehicule>> neighbors;
-        Neighbourhood neighbourhood = new Neighbourhood();
+        Neighbourhood neighbourhood = new Neighbourhood(graph);
         for (int i = 0; i < maximumIteration; i++) {
-            neighbors = t.generateNeighbors();
+            neighbors = neighbourhood.generateNeighbors();
             ArrayList<Vehicule> min = neighbors.stream()
                     .filter(neighbor -> !tabuList.contains(neighbor))
                     .min((solution1, solution2) -> (int) (Graph.getFitness(solution1) - Graph.getFitness(solution2)))
@@ -55,11 +55,11 @@ public class TabuSearch {
         }
         graph.setVehicules(bestSolution);
         return graph;
-    }*/
+    }
 
-    public Graph tabuNum2 (Graph graph, int maxIter) {
+    public Graph tabuNum2(Graph graph, int maxIter) {
         Neighbourhood neighbourhood = new Neighbourhood();
-        for(int i = 0; i < maxIter; i++) {
+        for (int i = 0; i < maxIter; i++) {
             List<Operation> C = neighbourhood.getVoisinage(graph)
                     .stream()
                     .filter(op -> !operationPresentInList(op))

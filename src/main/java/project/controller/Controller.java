@@ -175,18 +175,6 @@ public class Controller implements Initializable {
         loadingPane.setVisible(true);
 
         Object selectedItem = algoTypeSelect.getSelectionModel().getSelectedItem();
-
-        if (Algorithm.RECUIT.equals(selectedItem)) {
-           // this.algorithme = new Recuit(currentGraph);
-            RecuitSimule recuitSimule = new RecuitSimule();
-            recuitSimule.recuitSimule(currentGraph, 10000, 0.5f, 1000.0);
-            drawGraph(this.currentGraph);
-        }
-        else if(Algorithm.TABOU.equals(selectedItem)){
-            TabuSearch tabuSearch = new TabuSearch(5);
-            this.currentGraph = tabuSearch.tabuNum2(this.currentGraph, 10000);
-            drawGraph(this.currentGraph);
-        }
         for (Vehicule vehicule : currentGraph.vehicules) {
             //tableau index AT
             ArrayList<Integer> arIndex = new ArrayList<>();
@@ -200,75 +188,28 @@ public class Controller implements Initializable {
             System.out.print("\n");
             System.out.println("Distance de la tournee : " + vehicule.longueur);
         }
-    }
-
-    @FXML
-    public void startSimulationWhile() {
-     /*   if(currentGraph == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText(null);
-            alert.setContentText("Veuillez d'abord importer un graphe.");
-            alert.showAndWait();
-            return;
-        }
-
-        loadingPane.setVisible(true);
-
-        Object selectedItem = algoTypeSelect.getSelectionModel().getSelectedItem();
 
         if (Algorithm.RECUIT.equals(selectedItem)) {
-            System.out.println("recuit");
-            this.algorithme = new Recuit(currentGraph);
-            drawGraphWhile();
+           // this.algorithme = new Recuit(currentGraph);
+            RecuitSimule recuitSimule = new RecuitSimule();
+            recuitSimule.recuitSimule(currentGraph, 10000, 0.1f, -300 / Math.log(0.8));
+            drawGraph(this.currentGraph);
         }
         else if(Algorithm.TABOU.equals(selectedItem)){
-            this.algorithme = new Tabu(currentGraph);
-            drawGraphWhile();
+            TabuSearch tabuSearch = new TabuSearch(5);
+            this.currentGraph = tabuSearch.tabuSearch(this.currentGraph, 10000,2);
+            drawGraph(this.currentGraph);
+        }
+        for (Vehicule vehicule : currentGraph.vehicules) {
+
+            System.out.println("NbColis du vehicule : " + vehicule.nbColis);
+            for(Node node : vehicule.tournee) {
+                System.out.print(currentGraph.nodes.indexOf(node) + " ");
+            }
+            System.out.print("\n");
+            System.out.println("Distance de la tournee : " + vehicule.longueur);
         }
     }
-
-    public void drawGraphWhile() {
-        Thread algo_thread = new Thread(() -> {
-            long attentemili = 0;
-            int attenteNano = 0;
-            stopAlgo = false;
-            int i = 0;
-            while (!stopAlgo || i < 1000) {
-                i++;
-                try {
-                    Thread.sleep(attentemili, attenteNano);
-                    synchronized (this) {
-                        algorithme.update();
-                        //this.currentGraph = this.algorithme.getGraph();
-                        attentemili = (long) tempsAttente;
-                        attenteNano = (int) (tempsAttente - attentemili);
-                    }
-                } catch (Exception ignored) {
-                }
-                Platform.runLater(() -> {
-                    synchronized (this) {
-                        //group.getChildren().clear();
-                        statFitness.setText(String.format("Longueur : %.3f", this.algorithme.getGraph().getFitness()));
-                        //drawGraph(currentGraph);
-                        //this.detailsController.addDistance(solution.longueur());
-                    }
-                });
-            }
-            System.out.println( this.algorithme.getGraph().getFitness());
-            Platform.runLater(() -> {
-                synchronized (this) {
-                    System.out.println("Stop");
-                   // group.getChildren().clear();
-                    statFitness.setText(String.format("Longueur : %.3f", algorithme.stop().getFitness()));
-                    drawGraph(algorithme.stop());
-                }
-            });
-        });
-        algo_thread.start();*/
-    }
-
-
 
     public void drawGraph(Graph graph) {
         this.graphPane.getChildren().clear();

@@ -1,6 +1,6 @@
 package project.Model;
 
-public abstract class Node {
+public class Node {
     private Point pos;
     private Integer poids;
     private Integer index;

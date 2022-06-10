@@ -94,9 +94,8 @@ public class Main  extends Application {
         Depot depot = (Depot) copy.remove(0);
 
         while (!copy.isEmpty()) {
-            Vehicule vehicule = new Vehicule();
-            vehicule.tournee = new Tournee();
-            vehicule.tournee.add(depot);
+            Vehicule vehicule = new Vehicule(depot);
+            vehicule.tournee = new ArrayList<Node>();
             vehicule.nbColis = 0;
             int poids = 0;
             int i = 0;
