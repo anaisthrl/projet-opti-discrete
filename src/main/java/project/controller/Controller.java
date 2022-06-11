@@ -54,8 +54,6 @@ public class Controller implements Initializable {
     @FXML private Label loadingPercentage;
     @FXML private ProgressBar loadingProgressBar;
 
-    @FXML private Slider zoomSlider;
-    @FXML private Label zoomPercentage;
     @FXML private Label mouseCoordinates;
 
     // For AnchorPane dragging
@@ -64,36 +62,20 @@ public class Controller implements Initializable {
 
     @FXML private CheckBox arrowCheckbox;
     @FXML private CheckBox colorCheckbox;
-    @FXML private TextField graphGrowthTxt;
 
     @FXML private ComboBox algoTypeSelect;
-    @FXML private Button startSimulationBtn;
-    @FXML private Button startSimulationWhile;
 
     @FXML private CheckBox chkbox2Opt;
     @FXML private CheckBox chkboxExchange;
     @FXML private CheckBox chkboxRelocate;
 
     private Graph currentGraph;
-    private Algorithme algorithme;
-    private boolean stopAlgo;
-    private double tempsAttente = 10;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        zoomPercentage.textProperty().bind(Bindings.createStringBinding(() -> Math.round(zoomSlider.getValue()) + "%", zoomSlider.valueProperty()));
-        zoomSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
-            setZoomLevel((double) newValue / 100d);
-        });
-//        startSimulationBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> currentGraph == null)); // FIXME
-
-
         this.algoTypeSelect.getItems().addAll(Algorithm.values());
         this.algoTypeSelect.getSelectionModel().selectFirst();
-
-
-
     }
 
     @FXML
@@ -135,7 +117,20 @@ public class Controller implements Initializable {
                     + " q : " + this.currentGraph.nodes.get(i).getPoids());
         }
         Random.fillVehicle(this.currentGraph, Vehicule.MAX_CAPACITY);
-       // Random.genAleatoire(this.currentGraph);
+        for (Vehicule vehicule : currentGraph.vehicules) {
+            //tableau index AT
+            ArrayList<Integer> arIndex = new ArrayList<>();
+
+            System.out.println("NbColis du vehicule : " + vehicule.nbColis);
+            for(Node node : vehicule.tournee) {
+                System.out.print(currentGraph.nodes.indexOf(node) + " ");
+                //AT
+                arIndex.add(currentGraph.nodes.indexOf(node));
+            }
+            System.out.print("\n");
+            System.out.println("Distance de la tournee : " + vehicule.longueur);
+        }
+        //Random.genAleatoire(this.currentGraph);
         this.graphZoneLabel.setVisible(false);
         this.graphPane.getChildren().clear();
         this.updateGraphStats();
@@ -163,7 +158,6 @@ public class Controller implements Initializable {
 
     @FXML
     public void startSimulation() {
-        stopAlgo =true;
         if(currentGraph == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
@@ -176,30 +170,22 @@ public class Controller implements Initializable {
         loadingPane.setVisible(true);
 
         Object selectedItem = algoTypeSelect.getSelectionModel().getSelectedItem();
-        for (Vehicule vehicule : currentGraph.vehicules) {
-            //tableau index AT
-            ArrayList<Integer> arIndex = new ArrayList<>();
 
-            System.out.println("NbColis du vehicule : " + vehicule.nbColis);
-            for(Node node : vehicule.tournee) {
-                System.out.print(currentGraph.nodes.indexOf(node) + " ");
-                //AT
-                arIndex.add(currentGraph.nodes.indexOf(node));
-            }
-            System.out.print("\n");
-            System.out.println("Distance de la tournee : " + vehicule.longueur);
-        }
 
         if (Algorithm.RECUIT.equals(selectedItem)) {
            // this.algorithme = new Recuit(currentGraph);
+            setLoading(0.0);
             RecuitSimule recuitSimule = new RecuitSimule();
             recuitSimule.recuitSimule(currentGraph, 10000, 0.5, -300 / Math.log(0.8));
             drawGraph(this.currentGraph);
+            setLoading(100.0);
         }
         else if(Algorithm.TABOU.equals(selectedItem)){
+            setLoading(0.0);
             TabuSearch tabuSearch = new TabuSearch(20);
             this.currentGraph = tabuSearch.tabuSearch(this.currentGraph, 10000,20);
             drawGraph(this.currentGraph);
+            setLoading(100.0);
         }
         for (Vehicule vehicule : currentGraph.vehicules) {
 
@@ -222,7 +208,7 @@ public class Controller implements Initializable {
                 graph.getDepot().getPos().getY() * GRAPH_GROWTH, Color.BLACK).setRadius(2);
 
         for (Vehicule vehicule : graph.getVehicules()) {
-            this.setLoading(0.5f);
+            this.setLoading(0.01f);
             ArrayList<Node> listClient = (ArrayList<Node>) vehicule.tournee;
             Color color = AVAILABLE_COLORS.get(colorIndex % AVAILABLE_COLORS.size());
             Node previous = graph.getDepot();
@@ -280,7 +266,6 @@ public class Controller implements Initializable {
 
     public void setZoomLevel(double value) {
         if (value <= 3 && value >= 0.1) {
-            zoomSlider.setValue(100d * value);
             graphPane.setScaleX(value);
             graphPane.setScaleY(value);
         }

@@ -1,5 +1,6 @@
 package project.Model;
 
+import java.awt.print.PrinterGraphics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,26 @@ public class Vehicule {
         updateNbColis();
     }
 
+    public void addClientWithIndex(Node client, Integer index) {
+        if (this.tournee == null) {
+            this.tournee = new ArrayList<>();
+        }
+        this.tournee.add(index,client);
+        updateDistanceTournee();
+        updateNbColis();
+    }
+
+    public Node removeClientWithIndex(Integer index) {
+        Node client = getTournee().get(index);
+
+        this.tournee.remove(client);
+
+        updateDistanceTournee();
+        updateNbColis();
+
+        return client;
+    }
+
     public double getDistanceBetween2Node(Node a, Node b) {
 
         final int dx = a.getPos().getX() - b.getPos().getX();
@@ -54,7 +75,7 @@ public class Vehicule {
     }
 
 
-    private void updateNbColis() {
+    public void updateNbColis() {
         this.nbColis = tournee.stream()
                 .mapToInt(Node::getPoids)
                 .sum();

@@ -20,7 +20,6 @@ public class RecuitSimule {
         Operation operation;
         Neighbourhood neighbourhood = new Neighbourhood();
         int nbTemp = (int) (Math.log(Math.log(0.8) / Math.log(0.01)) / Math.log(mu)) * 3; //Nb changement de temperature
-        //System.out.println(nbTemp);
         for (int i = 0; i < nbTemp; i++) {
             for (int j = 0; j < maxIteration; j++) {
                 currentSolution = graph.cloneVehicules();

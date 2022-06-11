@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Main  extends Application {
-    private static final boolean ExportCSV = true;
+    private static final boolean ExportCSV = false;
 
     private static Stage stage;
     public static String[] paths = {
