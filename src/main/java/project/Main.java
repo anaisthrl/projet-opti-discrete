@@ -44,15 +44,15 @@ public class Main  extends Application {
     public static void main(String args[]) throws IOException {
         if (Main.ExportCSV) {
             ExportController.prepareExport(Algorithm.RECUIT, 10000,.9f , 500, 0);
-//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 10000,.8f , 0);
-//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 10000,.7f , 0);
-//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 10000,.6f , 0);
-//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 10000,.5f , 0);
-//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 100000,.9f , 0);
-//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 100000,.8f , 0);
-//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 100000,.7f , 0);
-//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 100000,.6f , 0);
-//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 100000,.5f , 0);
+         /*   ExportController.prepareExport(Algorithm.RECUIT, 10000,.8f , 500, 0);
+            ExportController.prepareExport(Algorithm.RECUIT, 10000,.7f , 500, 0);
+            ExportController.prepareExport(Algorithm.RECUIT, 10000,.6f , 500, 0);
+            ExportController.prepareExport(Algorithm.RECUIT, 10000,.5f , 500, 0);
+            ExportController.prepareExport(Algorithm.RECUIT, 100000,.9f , 500, 0);
+            ExportController.prepareExport(Algorithm.RECUIT, 100000,.8f , 500, 0);
+            ExportController.prepareExport(Algorithm.RECUIT, 100000,.7f , 500, 0);
+            ExportController.prepareExport(Algorithm.RECUIT, 100000,.6f , 500, 0);
+            ExportController.prepareExport(Algorithm.RECUIT, 100000,.5f , 500, 0);*/
             return;
         }
 
@@ -60,8 +60,8 @@ public class Main  extends Application {
         launch();
     }
 
-
-    /*public static void showresult(String args[]) throws IOException {
+/*
+    public static void showresult() throws IOException {
         Graph graph = load(paths[0]);
         double nbColis = 0;
 
@@ -81,30 +81,13 @@ public class Main  extends Application {
         System.out.println("Nb vehicule : " + graph.vehicules.size());
 
         for (Vehicule vehicule : graph.vehicules) {
-            //tableau index AT
-            ArrayList<Integer> arIndex = new ArrayList<>();
-
             System.out.println("NbColis du vehicule : " + vehicule.nbColis);
             for(Node node : vehicule.tournee) {
                 System.out.print(graph.nodes.indexOf(node) + " ");
-                //AT
-                arIndex.add(graph.nodes.indexOf(node));
             }
             System.out.print("\n");
             System.out.println("Distance de la tournee : " + vehicule.longueur);
-
-            //AT
-            System.out.print("\n");
-            System.out.println("relocate...\n");
-            OperateursVoisinage ov = new OperateursVoisinage();
-            //ov.relocate(arIndex);
-            System.out.print("\n");
-
         }
-
-        CVRP cvrp = new CVRP(graph);
-
-        //cvrp.repaint();
     }*/
 
     public static Graph genAleatoire(Graph graph) {

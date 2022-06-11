@@ -110,31 +110,51 @@ public class Controller implements Initializable {
 
     public void loadGraph(File file) throws IOException {
         this.currentGraph = Main.load(file);
-        for (int i = 0; i < this.currentGraph.nodes.size(); i++) {
-            System.out.println("index : " + i + "; "
-                    + " x : " + this.currentGraph.nodes.get(i).getPos().getX() + "; "
-                    + " y : " + this.currentGraph.nodes.get(i).getPos().getY() + "; "
-                    + " q : " + this.currentGraph.nodes.get(i).getPoids());
-        }
-        Random.fillVehicle(this.currentGraph, Vehicule.MAX_CAPACITY);
-        for (Vehicule vehicule : currentGraph.vehicules) {
-            //tableau index AT
-            ArrayList<Integer> arIndex = new ArrayList<>();
+        showresult();
+        //Random.fillVehicle(this.currentGraph, Vehicule.MAX_CAPACITY);
+        /*for (Vehicule vehicule : currentGraph.vehicules) {
 
             System.out.println("NbColis du vehicule : " + vehicule.nbColis);
             for(Node node : vehicule.tournee) {
                 System.out.print(currentGraph.nodes.indexOf(node) + " ");
-                //AT
-                arIndex.add(currentGraph.nodes.indexOf(node));
             }
             System.out.print("\n");
             System.out.println("Distance de la tournee : " + vehicule.longueur);
-        }
-        //Random.genAleatoire(this.currentGraph);
+        }*/
+        Random.genAleatoire(this.currentGraph);
         this.graphZoneLabel.setVisible(false);
         this.graphPane.getChildren().clear();
         this.updateGraphStats();
         this.drawGraph(this.currentGraph);
+
+    }
+
+    public void showresult() throws IOException {
+        double nbColis = 0;
+
+        for (int i = 0; i < this.currentGraph.nodes.size(); i++) {
+            nbColis += this.currentGraph.nodes.get(i).getPoids();
+            /*System.out.println("index : " + i + "; "
+                    + " x : " + this.currentGraph.nodes.get(i).getPos().getX() + "; "
+                    + " y : " + this.currentGraph.nodes.get(i).getPos().getY() + "; "
+                    + " q : " + this.currentGraph.nodes.get(i).getPoids());*/
+        }
+
+        double res = nbColis / Vehicule.MAX_CAPACITY;
+        System.out.println("Nb colis : " + nbColis);
+        System.out.println("Nb minimum de vehicules : " + Math.ceil(res));
+/*
+        graph = genAleatoire(graph);
+        System.out.println("Nb vehicule : " + graph.vehicules.size());
+
+        for (Vehicule vehicule : graph.vehicules) {
+            System.out.println("NbColis du vehicule : " + vehicule.nbColis);
+            for (Node node : vehicule.tournee) {
+                System.out.print(graph.nodes.indexOf(node) + " ");
+            }
+            System.out.print("\n");
+            System.out.println("Distance de la tournee : " + vehicule.longueur);
+        }*/
     }
 
     public void updateGraphStats() {
