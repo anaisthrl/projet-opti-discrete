@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="project.CVRP">
+  <grid id="27dc6" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="dbc3b" class="javax.swing.JButton" binding="btnDraw">
+        <constraints/>
+        <properties>
+          <enabled value="true"/>
+          <hideActionText value="false"/>
+          <horizontalAlignment value="0"/>
+          <text value="ReDraw"/>
+          <verticalAlignment value="0"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

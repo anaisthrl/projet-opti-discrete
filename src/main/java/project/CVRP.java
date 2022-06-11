@@ -1,31 +1,43 @@
+package project;
+
+import project.Algorithms.Recuit;
+import project.Model.Graph;
+import project.Model.Node;
+import project.Model.Vehicule;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Random;
 
 
-public class CVRP extends JFrame{
+public class CVRP extends JFrame implements ActionListener {
 
     private Graph graph = new Graph();
     private int DECALAGE = 100;
     private int ZOOM = 6;
-    private JButton buttonRedraw;
-
-
+    private JButton btnDraw;
+    private Recuit recuit;
 
 
     public CVRP(Graph g){
         graph = g;
+        recuit = new Recuit(this.graph);
         setTitle("Représentation CVRP");
         setSize(1000,1000);
         setVisible(true);
+        setLayout(new FlowLayout());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        btnDraw.addActionListener(this);
+        this.add(btnDraw);
     }
 
     @Override
     public void paint(Graphics g){
+        super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         /*for (int i = 0; i < graph.nodes.size(); i++){
             if(i==0){
@@ -50,14 +62,34 @@ public class CVRP extends JFrame{
                 g.setColor(Color.BLACK);
                 if (graph.nodes.indexOf(previous) == 0) g.setColor(Color.RED);
                 //Pour chaque noeud on prend celui d'apres et on les relies
-                g.fillOval((previous.posX * ZOOM + DECALAGE) - ZOOM, (previous.posY * ZOOM + DECALAGE)- ZOOM, 10, 10);
+                g.fillOval((previous.getPos().getX() * ZOOM + DECALAGE) - ZOOM,
+                        (previous.getPos().getY() * ZOOM + DECALAGE)- ZOOM, 10, 10);
 
                 g.setColor(visitColor);
-                g.drawLine((previous.posX * ZOOM + DECALAGE)- ZOOM / 2, (previous.posY * ZOOM + DECALAGE)- ZOOM / 2, (current.posX * ZOOM + DECALAGE)- ZOOM / 2, (current.posY * ZOOM + DECALAGE)- ZOOM / 2);
+                g.drawLine((previous.getPos().getX() * ZOOM + DECALAGE)- ZOOM / 2,
+                        (previous.getPos().getY() * ZOOM + DECALAGE)- ZOOM / 2,
+                        (current.getPos().getX() * ZOOM + DECALAGE)- ZOOM / 2,
+                        (current.getPos().getY() * ZOOM + DECALAGE)- ZOOM / 2);
                 previous = current; //On garde en mémoire le noeud précedent
             }
         }
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+        recuit.setGraph(this.graph);
+        if (source == btnDraw) {
+            System.out.println("re Paint");
+            //this.graph = project.Main.load(project.Main.paths[0]);
+            recuit.update();
+            this.graph = recuit.getGraph();
 
+            //project.Main.genAleatoire(this.graph);
+
+
+            this.repaint();
+        }
+        source = null;
+    }
 }
