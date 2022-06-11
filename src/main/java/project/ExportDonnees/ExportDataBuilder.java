@@ -5,13 +5,14 @@ public class ExportDataBuilder {
     private int nbClient; // Nombre de clients
     private int nbVehicule; // Nombre de véhicules minimum après simulation
     private String nomAlgo; // Recuit ou Tabu (type d'algo)
-    private double baseFitness;
-    private double endFitness; // Fitness résultat après simulation
+    private int baseFitness;
+    private int endFitness; // Fitness résultat après simulation
     private int nbIteration; // Nombre d'itérations
     private double executionTime; // Temps d'éxécution de l'algorithme
     private double mu;
     private double temperature;
     private int tailleListTabou;
+    private String transfosElem;
 
     private ExportDataBuilder() {
     }
@@ -40,7 +41,7 @@ public class ExportDataBuilder {
         return this;
     }
 
-    public ExportDataBuilder baseFitness(double baseFitness) {
+    public ExportDataBuilder baseFitness(int baseFitness) {
         this.baseFitness = baseFitness;
         return this;
     }
@@ -55,7 +56,7 @@ public class ExportDataBuilder {
         return this;
     }
 
-    public ExportDataBuilder endFitness(double endFitness) {
+    public ExportDataBuilder endFitness(int endFitness) {
         this.endFitness = endFitness;
         return this;
     }
@@ -75,7 +76,12 @@ public class ExportDataBuilder {
         return this;
     }
 
+    public ExportDataBuilder transfosElem(String transfosElem) {
+        this.transfosElem = transfosElem;
+        return this;
+    }
+
     public ExportData build() {
-        return new ExportData(nomFichier, nbClient, nomAlgo,  baseFitness, endFitness, nbVehicule, nbIteration, mu, temperature,tailleListTabou, executionTime);
+        return new ExportData(nomFichier, nbClient, nomAlgo,  baseFitness, endFitness, nbVehicule, nbIteration, mu, temperature,tailleListTabou, executionTime, transfosElem);
     }
 }

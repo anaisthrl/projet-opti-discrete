@@ -9,25 +9,27 @@ public class ExportData {
     private int nbClient; // Nombre de clients
     private int nbVehicule; // Nombre de véhicules minimum après simulation
     private String nomAlgo; // Recuit ou Tabu (type d'algo)
-    private double baseFitness;
-    private double endFitness; // Fitness résultat après simulation
+    private int baseFitness;
+    private int endFitness; // Fitness résultat après simulation
     private int nbIteration; // Nombre d'itérations
     private double executionTime; // Temps d'éxécution de l'algorithme
     private double mu;
     private double temperature;
     private int tailleListTabou;
+    private String transfosElem;
 
     public ExportData(String nomFichier,
                       int nbClient,
                       String nomAlgo,
-                      double baseFitness,
-                      double endFitness,
+                      int baseFitness,
+                      int endFitness,
                       int nbVehicule,
                       int nbIteration,
                       double mu,
                       double temperature,
                       int tailleListTabou,
-                      double executionTime) {
+                      double executionTime,
+                      String transfosElem) {
         this.nomFichier = nomFichier;
         this.nbClient = nbClient;
         this.baseFitness = baseFitness;
@@ -39,6 +41,7 @@ public class ExportData {
         this.tailleListTabou = tailleListTabou;
         this.nomAlgo = nomAlgo;
         this.executionTime = executionTime;
+        this.transfosElem = transfosElem;
     }
 
     @Override
@@ -59,8 +62,8 @@ public class ExportData {
     }
 
     public String[] getRowForAlgorithm(Algorithm algorithm) {
-        String[] rows = new String[]{nomFichier, nbClient + "", baseFitness + "",
-                nomAlgo, endFitness + "", nbVehicule + "",
+        String[] rows = new String[]{nomFichier, nbClient + "", nomAlgo +"", transfosElem +"", baseFitness + "",
+                endFitness + "", nbVehicule + "",
                 nbIteration + "", executionTime +""};
 
         if (algorithm == Algorithm.RECUIT) {
@@ -83,7 +86,7 @@ public class ExportData {
         return endFitness;
     }
 
-    public void setEndFitness(double endFitness) {
+    public void setEndFitness(int endFitness) {
         this.endFitness = endFitness;
     }
 

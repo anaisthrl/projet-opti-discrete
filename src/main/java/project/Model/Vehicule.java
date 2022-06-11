@@ -65,12 +65,13 @@ public class Vehicule {
 
     public void updateDistanceTournee() {
         double res = 0;
-
-        res += getDistanceBetween2Node(depot, tournee.get(0));
-        for (int i = 1; i < tournee.size(); i++) {
-            res += getDistanceBetween2Node(tournee.get(i - 1), tournee.get(i));
+        if(!tournee.isEmpty()) {
+            res += getDistanceBetween2Node(depot, tournee.get(0));
+            for (int i = 1; i < tournee.size(); i++) {
+                res += getDistanceBetween2Node(tournee.get(i - 1), tournee.get(i));
+            }
+            res += getDistanceBetween2Node(tournee.get(tournee.size() - 1), depot);
         }
-        res += getDistanceBetween2Node(tournee.get(tournee.size() - 1), depot);
         this.longueur = res;
     }
 

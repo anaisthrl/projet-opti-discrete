@@ -14,12 +14,12 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 
 public class ExportController {
-    public static void prepareExport(Algorithm algorithm, int iterationCount, float variation, float temperature, int tabuListSize) {
+    public static void prepareExport(Algorithm algorithm, int iterationCount, double variation, double temperature, int tabuListSize, String transfoElem) {
         ExportService exportService;
         if(Algorithm.RECUIT.equals(algorithm)){
-            exportService = new ExportService(algorithm, iterationCount, variation, temperature);
+            exportService = new ExportService(algorithm, iterationCount, variation, temperature, transfoElem);
         }else{
-            exportService = new ExportService(algorithm, iterationCount, tabuListSize);
+            exportService = new ExportService(algorithm, iterationCount, tabuListSize, transfoElem);
         }
         CSVWriter writer = exportService.createCsv();
 
@@ -61,21 +61,23 @@ public class ExportController {
     public static void startSimu(String nomFichier, ExportService exportService, CSVWriter writer) throws IOException {
         File file = new File(new File("").getAbsolutePath() + "\\ressources\\" + nomFichier);
         Graph _graph = Main.load(file);
-        Graph graph = Random.fillVehicle(_graph, Vehicule.MAX_CAPACITY);
+        //Graph graph = Random.fillVehicle(_graph, Vehicule.MAX_CAPACITY);
+        Graph graph = Random.genAleatoire(_graph);
 
         ExportData csvData = ExportDataBuilder.builder()
                 .nomFichier(nomFichier)
                 .nbClient(graph.getNodes().size())
-                .baseFitness(graph.getFitness())
-                .nbVehicule(graph.getVehicules().size())
                 .nomAlgo(exportService.getAlgorithm().algorithmName)
+                .baseFitness((int)graph.getFitness())
+                .nbVehicule(graph.getVehicules().size())
                 .iterationCount(exportService.getIterationCount())
                 .mu(exportService.getMu())
                 .temperature(exportService.getTemperature())
+                .transfosElem(exportService.getTransfoElem())
                 .tailleListTabou(exportService.getTailleTabouList())
                 .build();
 
-
+        long startLocal = System.nanoTime();
         // Ici : on lance la simulation
         TabuSearch tabuSearch = new TabuSearch(20);
         //this.currentGraph = tabuSearch.tabuSearch(this.currentGraph, 10000,20);
@@ -88,9 +90,11 @@ public class ExportController {
         } else {
             optimizedGraph = tabuSearch.tabuSearch(graph, exportService.getIterationCount(), exportService.getTailleTabouList());
         }
-
+        long stopLocal = System.nanoTime();
+        long exectime = Math.abs(startLocal- stopLocal) / 1000000;
         // Fin de la simulation
-        csvData.setEndFitness(optimizedGraph.getFitness());
+        csvData.setExecutionTime(exectime);
+        csvData.setEndFitness((int)optimizedGraph.getFitness());
         csvData.setNbVehicule(optimizedGraph.getVehicules().size());
 
         exportService.writeLine(csvData, writer);

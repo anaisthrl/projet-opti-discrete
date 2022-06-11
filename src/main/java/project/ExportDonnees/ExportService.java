@@ -14,21 +14,20 @@ import java.util.stream.Stream;
 import com.opencsv.CSVWriter;
 
 public class ExportService {
-
-
     private String pathFile;
     private Algorithm algorithm;
     private int iterationCount;
     private double mu;
     private double temperature;
     private int tailleTabouList;
-
+    private double executionTime;
+    private String transfoElem;
 
     private final static String[] COLUMNS_HEADERS = new String[]{
-            "Fichier", "Clients", "Algorithme appliqué", "Fitness initiale", "Fitness finale",
+            "Fichier", "Clients", "Algorithme applique", "Transformations Elementaires", "Fitness initiale", "Fitness finale",
             "Vehicules" , "Iterations" , "Temps d'execution"
     };
-    private final static String[] COLUMNS_SIMULATED_ANNEALING = new String[]{"Variation (µ)", "Temperature"};
+    private final static String[] COLUMNS_SIMULATED_ANNEALING = new String[]{"Variation (mu)", "Temperature"};
     private final static String[] COLUMNS_TABU = new String[]{"Taille liste tabou"};
 
 
@@ -38,15 +37,17 @@ public class ExportService {
         this.pathFile = new File("").getAbsolutePath() + "\\exports\\";
     }
 
-    public ExportService(Algorithm algorithm, int iterationCount, float mu, float temperature) {
+    public ExportService(Algorithm algorithm, int iterationCount, double mu, double temperature, String transfoElem) {
         this(algorithm, iterationCount);
-        this.mu = mu;
+        this.mu = (double) Math.round(mu * 100) / 100;;
         this.temperature = temperature;
+        this.transfoElem = transfoElem;
     }
 
-    public ExportService(Algorithm algorithm, int iterationCount, int tailleTabouList) {
+    public ExportService(Algorithm algorithm, int iterationCount, int tailleTabouList, String transfoElem) {
         this(algorithm, iterationCount);
         this.tailleTabouList = tailleTabouList;
+        this.transfoElem = transfoElem;
     }
 
 
@@ -57,7 +58,7 @@ public class ExportService {
             String strVariation = mu == 0f ? "" : String.valueOf(mu);
             String strTemperature = temperature == 0f ? "" : String.valueOf(temperature);
             String strTabuListSize = tailleTabouList == 0 ? "" : String.valueOf(tailleTabouList);
-            String fileName = this.pathFile + String.format("%s_%d_%s%s%s.csv", algorithm, iterationCount, strVariation, strTemperature, strTabuListSize);
+            String fileName = this.pathFile + String.format("%s_%d_%s_%s_%s.csv", algorithm, iterationCount, strVariation, strTemperature, strTabuListSize);
 
             if(new File(fileName).exists()) {
                 throw new RuntimeException("Le fichier " + fileName + " existe deja. Creation annulee.");
@@ -136,5 +137,21 @@ public class ExportService {
 
     public int getTailleTabouList() {
         return tailleTabouList;
+    }
+
+    public double getExecutionTime() {
+        return executionTime;
+    }
+
+    public void setExecutionTime(double executionTime) {
+        this.executionTime = executionTime;
+    }
+
+    public String getTransfoElem() {
+        return transfoElem;
+    }
+
+    public void setTransfoElem(String transfoElem) {
+        this.transfoElem = transfoElem;
     }
 }

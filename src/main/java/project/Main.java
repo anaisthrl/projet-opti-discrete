@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Main  extends Application {
-    private static final boolean ExportCSV = false;
+    private static final boolean ExportCSV = true;
 
     private static Stage stage;
     public static String[] paths = {
@@ -43,16 +43,20 @@ public class Main  extends Application {
 
     public static void main(String args[]) throws IOException {
         if (Main.ExportCSV) {
-            ExportController.prepareExport(Algorithm.RECUIT, 10000,.9f , 500, 0);
-         /*   ExportController.prepareExport(Algorithm.RECUIT, 10000,.8f , 500, 0);
-            ExportController.prepareExport(Algorithm.RECUIT, 10000,.7f , 500, 0);
-            ExportController.prepareExport(Algorithm.RECUIT, 10000,.6f , 500, 0);
-            ExportController.prepareExport(Algorithm.RECUIT, 10000,.5f , 500, 0);
-            ExportController.prepareExport(Algorithm.RECUIT, 100000,.9f , 500, 0);
-            ExportController.prepareExport(Algorithm.RECUIT, 100000,.8f , 500, 0);
-            ExportController.prepareExport(Algorithm.RECUIT, 100000,.7f , 500, 0);
-            ExportController.prepareExport(Algorithm.RECUIT, 100000,.6f , 500, 0);
-            ExportController.prepareExport(Algorithm.RECUIT, 100000,.5f , 500, 0);*/
+            ExportController.prepareExport(Algorithm.TABOU, 10000,0 , 0, 1, "RelocateINTER RelocateINTRA Exchange");
+            ExportController.prepareExport(Algorithm.TABOU, 10000,0 , 0, 5, "RelocateINTER RelocateINTRA Exchange");
+            ExportController.prepareExport(Algorithm.TABOU, 10000,0 , 0, 10, "RelocateINTER RelocateINTRA Exchange");
+            ExportController.prepareExport(Algorithm.TABOU, 10000,0 , 0, 20, "RelocateINTER RelocateINTRA Exchange");
+
+            // ExportController.prepareExport(Algorithm.RECUIT, 10000,0.1 , 10, 0, "RelocateINTER RelocateINTRA Exchange");
+           // ExportController.prepareExport(Algorithm.RECUIT, 10000,0.5 , 10, 0,"RelocateINTER RelocateINTRA Exchange");
+           // ExportController.prepareExport(Algorithm.RECUIT, 10000,0.9 , 10, 0, "RelocateINTER RelocateINTRA Exchange");
+           // ExportController.prepareExport(Algorithm.RECUIT, 10000,0.1 , 100, 0, "RelocateINTER RelocateINTRA Exchange");
+           // ExportController.prepareExport(Algorithm.RECUIT, 10000,0.5 , 100, 0, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.RECUIT, 10000,0.9 , 100, 0, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.RECUIT, 10000,0.1 , 1000, 0, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.RECUIT, 10000,0.5 , 1000, 0, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.RECUIT, 10000,0.9 , 1000, 0, "RelocateINTER RelocateINTRA Exchange");
             return;
         }
 
