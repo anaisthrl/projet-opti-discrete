@@ -60,6 +60,8 @@ public class Random {
             }
             vehicle.tournee.add(c);
             clients.remove(index);
+            vehicle.updateDistanceTournee();
+            vehicle.updateNbColis();
         }
         g.setVehicules(vehicles);
         return g;

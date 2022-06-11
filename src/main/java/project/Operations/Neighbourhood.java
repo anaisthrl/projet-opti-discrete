@@ -34,7 +34,7 @@ public class Neighbourhood {
         int twoopt = 3;
 
         switch (randOperation) {
-            case 0 : return  new Relocate(graph);
+            case 0 : return new Relocate(graph);
             case 1 : return new RelocateInter(graph);
             case 2 : return new Exchange(graph);
             //case 3 : return new TwoOpt(graph);
@@ -190,7 +190,7 @@ public class Neighbourhood {
             for (int pointIndex = 0; pointIndex < storedSolution.get(vehicleIndex).getTournee().size(); pointIndex++) {
                 neighbors.addAll(generateRelocateInternNeighbors(vehicleIndex, pointIndex));
                 neighbors.addAll(generateRelocateExternNeighbors(vehicleIndex, pointIndex));
-//                neighbors.addAll(generateExchangeInternNeighbors(vehicleIndex, pointIndex));
+                neighbors.addAll(generateExchangeInternNeighbors(vehicleIndex, pointIndex)); //Exchange
                 this.graph.setVehicules(this.graph.cloneVehicules());
             }
         }
@@ -226,6 +226,7 @@ public class Neighbourhood {
             this.graph.setVehicules(storedSolution);
         }
 
+
         return neighbors;
     }
 
@@ -242,7 +243,7 @@ public class Neighbourhood {
         ArrayList<Vehicule> defaultSolution = this.graph.cloneVehicules();
 
         Vehicule vehicleToModify = this.graph.getVehicules().get(vehicleIndex);
-        Node clientToMove = vehicleToModify.tournee.remove(pointIndex);
+        Node clientToMove = vehicleToModify.removeClientWithIndex(pointIndex);
         if (vehicleToModify.getTournee().isEmpty()) {
             this.graph.getVehicules().remove(vehicleIndex);
         }
@@ -255,14 +256,13 @@ public class Neighbourhood {
 
                 Vehicule vehicleToInsert = this.graph.getVehicules().get(vehicleInsertIndex);
 
-                if (vehicleToInsert.getLongueur() + clientToMove.getPoids() <= Vehicule.MAX_CAPACITY) {
-                    List<Node> clientsToInsert = vehicleToInsert.getTournee();
+                if (vehicleToInsert.getNbColis() + clientToMove.getPoids() <= Vehicule.MAX_CAPACITY) {
+                    ArrayList<Node> clientsToInsert = (ArrayList<Node>) vehicleToInsert.getTournee();
                     for (int pointInsertIndex = 0; pointInsertIndex <= clientsToInsert.size(); pointInsertIndex++) {
-                        vehicleToInsert.tournee.add(pointInsertIndex, clientToMove);
+                        vehicleToInsert.addClientWithIndex(clientToMove,pointInsertIndex);
                         neighbors.add(this.graph.cloneVehicules());
-                        vehicleToInsert.tournee.remove(pointInsertIndex);
+                        vehicleToInsert.removeClientWithIndex(pointInsertIndex);
                     }
-
                 }
 
             }
@@ -276,6 +276,51 @@ public class Neighbourhood {
         this.graph.setVehicules(defaultSolution);
 
         return neighbors;
+    }
+
+    /**
+     * TABU
+     * Génére tout les voisins en échangeant deux points d'un véhicule
+     * @param vehiculeInd
+     * @param client1ToExchangeIndex
+     * @return
+     */
+    public ArrayList<ArrayList<Vehicule>> generateExchangeInternNeighbors(int vehiculeInd, int client1ToExchangeIndex) {
+        ArrayList<ArrayList<Vehicule>> neighbors = new ArrayList<>();
+        ArrayList<Vehicule> storedSolution = this.graph.cloneVehicules();
+        Vehicule vehicule = this.graph.getVehicules().get(vehiculeInd);
+
+        int size = vehicule.getTournee().size();
+
+        if (size >= 2) {
+
+            for (int client2ToExchangeIndex = 0; client2ToExchangeIndex < size-2; client2ToExchangeIndex++){
+                doExchangeTabu(vehicule, client1ToExchangeIndex, client2ToExchangeIndex);
+                neighbors.add(this.graph.cloneVehicules());
+            }
+
+            //On remet la solution sauvegardée au graph
+            this.graph.setVehicules(storedSolution);
+        }
+
+        return neighbors;
+    }
+
+    public void doExchangeTabu(Vehicule vehicule, int client1Index, int client2Index) {
+        if (client2Index != client1Index) {
+            Node client1, client2;
+            //On retire le plus grand en premier pour ne pas décaler les index de la liste
+            if (client1Index > client2Index) {
+                int temp = client1Index;
+                client1Index = client2Index;
+                client2Index = temp;
+            }
+            client2 = vehicule.removeClientWithIndex(client2Index);
+            client1 = vehicule.removeClientWithIndex(client1Index);
+            vehicule.addClientWithIndex(client2,client1Index);
+            vehicule.addClientWithIndex(client1,client2Index);
+
+        }
     }
 
 }

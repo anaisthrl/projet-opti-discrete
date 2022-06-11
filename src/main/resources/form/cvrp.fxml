@@ -42,7 +42,6 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -78,7 +77,7 @@
               <items>
                 <AnchorPane fx:id="graphPane" minHeight="0.0" minWidth="0.0" onMouseDragged="#handleGraphPaneDragged" onMouseMoved="#updateMouseCoordinates" onMousePressed="#handleGraphPanePressed" prefHeight="160.0" prefWidth="100.0" style="-fx-border-color: lightgray;">
                      <children>
-                        <Label fx:id="graphZoneLabel" alignment="CENTER" layoutX="1.0" prefHeight="693.0" prefWidth="1021.0" text="Le graphe apparaîtra ici" textAlignment="CENTER" textFill="GREY" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Label fx:id="graphZoneLabel" alignment="CENTER" layoutX="1.0" prefHeight="693.0" prefWidth="1021.0" textAlignment="CENTER" textFill="GREY" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
                               <Font size="26.0" />
                            </font>
@@ -109,7 +108,7 @@
                                                 <Label fx:id="loadingPercentage" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="224.0" text="0%" />
                                              </children>
                                           </AnchorPane>
-                                          <Button fx:id="startSimulationBtn" layoutX="16.0" layoutY="455.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Stop" AnchorPane.leftAnchor="16.0" />
+                                          <Button fx:id="startSimulationBtn" layoutX="16.0" layoutY="455.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Start" AnchorPane.leftAnchor="16.0" />
                                           <Label layoutX="21.0" layoutY="223.0" text="Nombre de véhicules : " />
                                           <Label fx:id="statNbVehicles" layoutX="143.0" layoutY="223.0" text="0" />
                                           <CheckBox fx:id="chkbox2Opt" layoutX="18.0" layoutY="341.0" mnemonicParsing="false" text="2-opt" visible="false" />
@@ -123,12 +122,12 @@
                                           <Separator layoutY="420.0" prefHeight="18.0" prefWidth="251.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                           <Label layoutX="21.0" layoutY="240.0" text="Fitness :" />
                                           <Label fx:id="statFitness" layoutX="66.0" layoutY="240.0" text="n/a" />
-                                          <Button fx:id="startSimulation2" layoutX="16.0" layoutY="488.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Lancer" />
+                                          <Button fx:id="startSimulation2" layoutX="16.0" layoutY="488.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Lancer" visible="false" />
                                        </children>
                                     </AnchorPane>
                               </content>
                             </Tab>
-                            <Tab text="Paramètres">
+                            <Tab disable="true" text="Paramètres">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
@@ -153,9 +152,6 @@
             </SplitPane>
             <AnchorPane prefHeight="18.0" prefWidth="1007.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0">
                <children>
-                  <Slider fx:id="zoomSlider" layoutX="40.0" layoutY="2.0" majorTickUnit="50.0" max="300.0" min="10.0" minorTickCount="10" prefHeight="14.0" prefWidth="129.0" value="100.0" />
-                  <Label text="Zoom" />
-                  <Label fx:id="zoomPercentage" layoutX="169.0" text="100%" />
                   <Label fx:id="mouseCoordinates" text="x : 0 / y : 0" AnchorPane.rightAnchor="0.0" />
                </children>
             </AnchorPane>
