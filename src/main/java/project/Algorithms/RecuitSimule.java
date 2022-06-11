@@ -12,7 +12,7 @@ public class RecuitSimule {
     private static int N1 = 100;
     private static int N2 = 10000;
 
-    public void recuitSimule(Graph graph, int maxIteration, float mu, double temperature) {
+    public Graph recuitSimule(Graph graph, int maxIteration, double mu, double temperature) {
         final java.util.Random random = new Random();
 
         ArrayList<Vehicule> currentSolution;
@@ -38,6 +38,7 @@ public class RecuitSimule {
                 temperature = mu * temperature;
             }
         }
+        return graph;
     }
 /*
     private Graph recuitSimule(Graph map, double mu) {

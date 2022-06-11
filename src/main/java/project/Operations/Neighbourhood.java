@@ -21,22 +21,24 @@ public class Neighbourhood {
 
 
     public Operation choixTransforAleatoire(Graph graph) {
-        int randOperation = random.nextInt(4);
+        int randOperation = random.nextInt(3);
 
         final List<Node> nodes = graph.getNodes();
         final int nodeSize = nodes.size();
         Vehicule vehicule;
         int tourneeSize;
 
-        int swap_inter = 0;
-        int swap_intra = 1;
-        int relocate = 2;
+        int relocate_inter = 0;
+        int relocate_intra = 1;
+        int exchange = 2;
         int twoopt = 3;
 
         switch (randOperation) {
-           // case 0 -> new Relocate(graph);
-          //  case 1 -> new RelocateInter(graph);
-            case 0:
+            case 0 : return  new Relocate(graph);
+            case 1 : return new RelocateInter(graph);
+            case 2 : return new Exchange(graph);
+            //case 3 : return new TwoOpt(graph);
+           /* case 0:
                 return new SwapInter(
                         nodes.get(random.nextInt(nodeSize - 1) + 1),
                         nodes.get(random.nextInt(nodeSize - 1) + 1)
@@ -50,7 +52,7 @@ public class Neighbourhood {
                             graph.getVehiculeContaining(node1).tournee,
                             graph.getVehiculeContaining(getRandomPoint(graph)).tournee,
                             node1);
-                }*/
+                }
                 return new SwapIntra(
                         vehicule.tournee.get(random.nextInt(tourneeSize-1) +1),
                         vehicule.tournee.get(random.nextInt(tourneeSize-1) +1)
@@ -65,17 +67,17 @@ public class Neighbourhood {
             case 3:
                 vehicule = graph.getVehicules().get(random.nextInt(graph.getVehicules().size()));
                 tourneeSize = vehicule.tournee.size() - 2;
-             /*   if(tourneeSize < 2){
+                /*if(tourneeSize < 2){
                     final Node node = getRandomPoint(graph);
                     return new Relocate(
                             graph.getVehiculeContaining(node).tournee,
                             graph.getVehiculeContaining(getRandomPoint(graph)).tournee,
                             node);
-                }*/
+                }
                 return new TwoOpt(
                         vehicule.tournee.get(random.nextInt(tourneeSize-1) +1),
                         vehicule.tournee.get(random.nextInt(tourneeSize-1) +1)
-                );
+                );*/
             default: return null;
         }
     }

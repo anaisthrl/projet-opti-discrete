@@ -134,7 +134,8 @@ public class Controller implements Initializable {
                     + " y : " + this.currentGraph.nodes.get(i).getPos().getY() + "; "
                     + " q : " + this.currentGraph.nodes.get(i).getPoids());
         }
-        Random.genAleatoire(this.currentGraph);
+        Random.fillVehicle(this.currentGraph, Vehicule.MAX_CAPACITY);
+       // Random.genAleatoire(this.currentGraph);
         this.graphZoneLabel.setVisible(false);
         this.graphPane.getChildren().clear();
         this.updateGraphStats();
@@ -192,12 +193,12 @@ public class Controller implements Initializable {
         if (Algorithm.RECUIT.equals(selectedItem)) {
            // this.algorithme = new Recuit(currentGraph);
             RecuitSimule recuitSimule = new RecuitSimule();
-            recuitSimule.recuitSimule(currentGraph, 10000, 0.5f, -300 / Math.log(0.8));
+            recuitSimule.recuitSimule(currentGraph, 10000, 0.5, -300 / Math.log(0.8));
             drawGraph(this.currentGraph);
         }
         else if(Algorithm.TABOU.equals(selectedItem)){
-            TabuSearch tabuSearch = new TabuSearch(5);
-            this.currentGraph = tabuSearch.tabuNum2(this.currentGraph, 10000);
+            TabuSearch tabuSearch = new TabuSearch(20);
+            this.currentGraph = tabuSearch.tabuSearch(this.currentGraph, 10000,20);
             drawGraph(this.currentGraph);
         }
         for (Vehicule vehicule : currentGraph.vehicules) {

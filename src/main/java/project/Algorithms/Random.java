@@ -37,4 +37,31 @@ public class Random {
         }
         return graph;
     }
+
+    public static Graph fillVehicle(Graph g, int quantityMax) {
+        int indexVehicle = 0;
+
+        //On tire aléatoirement des noeuds pour les mettre dans des tournées aléatoirement
+        ArrayList<Node> clients = (ArrayList<Node>) g.getNodes().clone();
+        Node depot = clients.remove(0);
+        ArrayList<Vehicule> vehicles = new ArrayList<>();
+
+        int index = 0;
+
+        vehicles.add(new Vehicule((Depot) depot));
+        Vehicule vehicle = vehicles.get(indexVehicle);
+
+        while (clients.size() != 0) {
+            Node c = clients.get(index);
+            if ((int) vehicle.getTournee().stream().mapToDouble(Node::getPoids).sum() + c.getPoids() > quantityMax) {
+                vehicles.add(new Vehicule((Depot) depot));
+                indexVehicle++;
+                vehicle = vehicles.get(indexVehicle);
+            }
+            vehicle.tournee.add(c);
+            clients.remove(index);
+        }
+        g.setVehicules(vehicles);
+        return g;
+    }
 }

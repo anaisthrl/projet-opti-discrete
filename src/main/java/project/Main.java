@@ -1,5 +1,7 @@
 package project;
 
+import project.Algorithms.Algorithm;
+import project.ExportDonnees.ExportController;
 import project.Model.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Main  extends Application {
+    private static final boolean ExportCSV = true;
+
     private static Stage stage;
     public static String[] paths = {
             "ressources/A3205.txt",
@@ -38,6 +42,21 @@ public class Main  extends Application {
 
 
     public static void main(String args[]) throws IOException {
+        if (Main.ExportCSV) {
+            ExportController.prepareExport(Algorithm.RECUIT, 10000,.9f , 500, 0);
+//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 10000,.8f , 0);
+//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 10000,.7f , 0);
+//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 10000,.6f , 0);
+//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 10000,.5f , 0);
+//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 100000,.9f , 0);
+//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 100000,.8f , 0);
+//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 100000,.7f , 0);
+//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 100000,.6f , 0);
+//            Simulation.prepareSimu(Algorithm.SIMULATED_ANNEALING, 100000,.5f , 0);
+            return;
+        }
+
+
         launch();
     }
 

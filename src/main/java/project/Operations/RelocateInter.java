@@ -17,7 +17,8 @@ public class RelocateInter extends Operation {
         this.graph = graph;
     }
 
-    public void relocateInter() {
+    @Override
+    public void apply(Graph graph) {
         Vehicule randomVehicleToModify = this.graph.getVehicules().get(random.nextInt(this.graph.getVehicules().size()));
         int indexRandomClientToModify = random.nextInt(randomVehicleToModify.tournee.size());
         Node randomClientToModify = randomVehicleToModify.tournee.get(indexRandomClientToModify);
@@ -57,12 +58,6 @@ public class RelocateInter extends Operation {
                 this.graph.getVehicules().add(newVehicle);
             }
         }
-
-    }
-
-    @Override
-    public void apply(Graph graph) {
-        relocateInter();
     }
 
     @Override

@@ -8,12 +8,20 @@ import project.Model.Vehicule;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
-public class CrossExchange extends Operation {
+public class Exchange extends Operation {
     private final Node a;
     private final Node b;
+    private final static Random random = new Random();
+    private Graph graph;
 
-    public CrossExchange(Node a, Node b) {
+    public Exchange(Graph graph) {
+        this.graph = graph;
+        this.a = null;
+        this.b = null;
+    }
+    public Exchange(Node a, Node b) {
         if (a instanceof Depot) throw new IllegalArgumentException("A ne peut pas etre le Depot");
         if (b instanceof Depot) throw new IllegalArgumentException("B ne peut pas etre le Depot");
 
@@ -21,9 +29,38 @@ public class CrossExchange extends Operation {
         this.b = b;
     }
 
+    public void doTransfo(Vehicule vehicule, int client1Index, int client2Index) {
+        if (client2Index != client1Index) {
+            Node client1, client2;
+            //On retire le plus grand en premier pour ne pas décaler les index de la liste
+            if (client1Index > client2Index) {
+                int temp = client1Index;
+                client1Index = client2Index;
+                client2Index = temp;
+            }
+            client2 = vehicule.tournee.remove(client2Index);
+            client1 = vehicule.tournee.remove(client1Index);
+            vehicule.tournee.add(client1Index, client2);
+            vehicule.tournee.add(client2Index, client1);
+
+        }
+    }
+
     @Override
     public void apply(Graph graph) {
-        final Vehicule vA = graph.getVehiculeContaining(a);
+            int vehicleToModifyIndex = random.nextInt(this.graph.getVehicules().size());
+            Vehicule vehicleToModify = this.graph.getVehicules().get(vehicleToModifyIndex);
+            int size = vehicleToModify.getTournee().size();
+
+            if (size > 2) {
+                int client1ToMoveIndex = random.nextInt(size);
+                int client2ToMoveIndex;
+                while ((client2ToMoveIndex = random.nextInt(size)) == client1ToMoveIndex);
+
+                doTransfo(vehicleToModify, client1ToMoveIndex, client2ToMoveIndex);
+            }
+
+        /*final Vehicule vA = graph.getVehiculeContaining(a);
         final Vehicule vB = graph.getVehiculeContaining(b);
 
         if (vA == null) throw new IllegalArgumentException("Node A not in solution");
@@ -42,7 +79,7 @@ public class CrossExchange extends Operation {
         subPathA.clear();
 
         vA.tournee.addAll(tmp);
-        vB.tournee.addAll(tmp2);
+        vB.tournee.addAll(tmp2);*/
     }
 
     @Override
@@ -64,12 +101,7 @@ public class CrossExchange extends Operation {
                 '}';
     }
 
-    /**
-     * Check si le poids max n'est pas enfreint
-     *
-     * @param graph Graphe
-     * @return validite de l'operation
-     */
+
     @Override
     public boolean isValid(Graph graph) {
         boolean valid = true;
