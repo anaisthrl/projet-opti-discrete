@@ -77,23 +77,41 @@ public class ExportController {
                 .tailleListTabou(exportService.getTailleTabouList())
                 .build();
 
-        long startLocal = System.nanoTime();
+        long startLocal;
+        long stopLocal;
+        long executionTime = 0;
         // Ici : on lance la simulation
         TabuSearch tabuSearch = new TabuSearch(20);
         //this.currentGraph = tabuSearch.tabuSearch(this.currentGraph, 10000,20);
         RecuitSimule recuitSimule = new RecuitSimule();
         //recuitSimule.recuitSimule(currentGraph, 10000, 0.5f, -300 / Math.log(0.8));
-        Graph optimizedGraph;
+        Graph optimizedGraph = null;
 
+        startLocal = System.nanoTime();
+
+        double fitnessMax = Double.MAX_VALUE;
         if(exportService.getAlgorithm() == Algorithm.RECUIT) {
-            optimizedGraph =  recuitSimule.recuitSimule(graph, exportService.getIterationCount(), exportService.getMu(), exportService.getTemperature());
+            for (int i = 0; i<3; i++){
+                long newstartLocal = System.nanoTime();
+                Graph simulatedGraph = graph.cloneMap();
+                simulatedGraph = recuitSimule.recuitSimule(simulatedGraph, exportService.getIterationCount(), exportService.getMu(), exportService.getTemperature());
+
+                // Fin de la simulation
+                if(simulatedGraph.getFitness() < fitnessMax){
+                    optimizedGraph = simulatedGraph.cloneMap();
+                    startLocal = newstartLocal;
+                    stopLocal = System.currentTimeMillis();
+                    executionTime = Math.abs(startLocal - stopLocal);
+                }
+            }
         } else {
             optimizedGraph = tabuSearch.tabuSearch(graph, exportService.getIterationCount(), exportService.getTailleTabouList());
+            stopLocal = System.nanoTime();
+            executionTime = Math.abs(startLocal- stopLocal) / 1000000;
         }
-        long stopLocal = System.nanoTime();
-        long exectime = Math.abs(startLocal- stopLocal) / 1000000;
+
         // Fin de la simulation
-        csvData.setExecutionTime(exectime);
+        csvData.setExecutionTime(executionTime);
         csvData.setEndFitness((int)optimizedGraph.getFitness());
         csvData.setNbVehicule(optimizedGraph.getVehicules().size());
 
