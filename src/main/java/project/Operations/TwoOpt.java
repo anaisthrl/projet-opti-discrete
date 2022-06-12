@@ -14,13 +14,63 @@ public class TwoOpt extends Operation {
 
     public TwoOpt(Graph graph) {
         this.graph = graph;
-        this.a = null;
-        this.b = null;
+        Vehicule vehicule1 = this.graph.getVehicules().get(random.nextInt(this.graph.getVehicules().size()));
+        Vehicule vehicule2 = this.graph.getVehicules().get(random.nextInt(this.graph.getVehicules().size()));
+        this.a = vehicule1.tournee.get(random.nextInt(vehicule1.getTournee().size()));
+        this.b = vehicule2.tournee.get(random.nextInt(vehicule2.getTournee().size()));
     }
     public TwoOpt(Node a, Node b) {
 
         this.a = a;
         this.b = b;
+    }
+
+    public Graph OPTOnce(Graph graph, int posA, int posB, int nbV) {
+        ArrayList<Node> clients = (ArrayList<Node>) graph.getVehicules().get(nbV).getTournee();
+        List<Node> clientCopy = new ArrayList<>(clients.subList(posA + 1, posB + 1));
+        Collections.reverse(clientCopy);
+        List<Node> finalList = new ArrayList<>(clients.subList(0, posA + 1));
+        finalList.addAll(clientCopy);
+        finalList.addAll(clients.subList(posB + 1, clients.size()));
+        graph.getVehicules().get(nbV).setTournee(new ArrayList<>(finalList));
+        return graph;
+    }
+
+    public ArrayList<Graph> OPTAll(Graph graph) {
+        ArrayList<Graph> maps = new ArrayList<>();
+        for (int k = 0; k <= graph.getVehicules().size() - 1; k++) {
+            ArrayList<Node> clients = (ArrayList<Node>) graph.getVehicules().get(k).getTournee();
+            if (clients.size() >= 4)
+                for (int i = 1; i < clients.size() - 1; i++) {
+                    Node cl1 = clients.get(i);
+                    Node cl2 = clients.get(i + 1);
+
+                    for (int j = i + 2; j < clients.size() - 2; j++) {
+                        Node cl3 = clients.get(j);
+                        Node cl4 = clients.get(j + 1);
+
+                        if (AreTwoEdgeDisjoint(cl1, cl2, cl3, cl4)) {
+                            Graph mapClone = graph.cloneMap();
+                            Graph m = OPTOnce(mapClone, i, j, k);
+                            maps.add(m);
+
+                        }
+                    }
+                }
+        }
+        return maps;
+    }
+
+    public boolean AreTwoEdgeDisjoint(Node cl1, Node cl2, Node cl3, Node cl4) {
+        if (AreTwoClientEquals(cl1, cl2) || AreTwoClientEquals(cl3, cl4)) {
+            return false;
+        }
+
+        return !AreTwoClientEquals(cl1, cl3) && !AreTwoClientEquals(cl1, cl4) && !AreTwoClientEquals(cl2, cl3) && !AreTwoClientEquals(cl2, cl4);
+    }
+
+    public boolean AreTwoClientEquals(Node cl1, Node cl2) {
+        return Objects.equals(cl1.getPos().getX(), cl2.getPos().getX()) && Objects.equals(cl1.getPos().getY(), cl2.getPos().getY());
     }
 
     public void doTransfo(Vehicule vehicule, int client1Index, int client2Index){
@@ -47,17 +97,30 @@ public class TwoOpt extends Operation {
 
     @Override
     public void apply(Graph graph) {
-        int vehculeIndexToMod = random.nextInt(this.graph.getVehicules().size());
-        Vehicule vehiculeToMod = this.graph.getVehicules().get(vehculeIndexToMod);
-        int size = vehiculeToMod.getTournee().size();
+        final Vehicule vA = graph.getVehiculeContaining(a);
+        final Vehicule vB = graph.getVehiculeContaining(b);
 
-        if (size > 2) {
-            int client1ToMoveIndex = random.nextInt(size);
-            int client2ToMoveIndex;
-            while ((client2ToMoveIndex = random.nextInt(size)) == client1ToMoveIndex);
+        if (vA == null) throw new IllegalArgumentException("Node A not in solution");
+        if (vB == null) throw new IllegalArgumentException("Node B not in solution");
 
-            doTransfo(vehiculeToMod, client1ToMoveIndex, client2ToMoveIndex);
-        }
+        final int iA = vA.tournee.indexOf(a);
+        final int iB = vB.tournee.indexOf(b);
+
+        List<Node> subPathA =  vA.tournee.subList(iA,  vA.tournee.size());
+        List<Node> subPathB =  vB.tournee.subList(iB,  vB.tournee.size());
+
+        List<Node> tmp = new ArrayList<>(subPathB);
+        List<Node> tmp2 = new ArrayList<>(subPathA);
+
+        subPathB.clear();
+        subPathA.clear();
+
+        vA.tournee.addAll(tmp);
+        vB.tournee.addAll(tmp2);
+        vA.updateNbColis();
+        vB.updateNbColis();
+        vA.updateDistanceTournee();
+        vB.updateDistanceTournee();
 
 
         /*

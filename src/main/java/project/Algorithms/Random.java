@@ -38,7 +38,7 @@ public class Random {
         return graph;
     }
 
-    public static Graph fillVehicle(Graph g, int quantityMax) {
+    public static Graph genererMemeSolution(Graph g, int quantityMax) {
         int indexVehicle = 0;
 
         //On tire aléatoirement des noeuds pour les mettre dans des tournées aléatoirement

@@ -92,18 +92,16 @@ public class ExportController {
         double fitnessMax = Double.MAX_VALUE;
         if(exportService.getAlgorithm() == Algorithm.RECUIT) {
             for (int i = 0; i<3; i++){
-                long newstartLocal = System.nanoTime();
                 Graph simulatedGraph = graph.cloneMap();
                 simulatedGraph = recuitSimule.recuitSimule(simulatedGraph, exportService.getIterationCount(), exportService.getMu(), exportService.getTemperature());
 
-                // Fin de la simulation
+                //on prend le meilleur des jeux de données
                 if(simulatedGraph.getFitness() < fitnessMax){
                     optimizedGraph = simulatedGraph.cloneMap();
-                    startLocal = newstartLocal;
-                    stopLocal = System.currentTimeMillis();
-                    executionTime = Math.abs(startLocal - stopLocal);
                 }
             }
+            stopLocal = System.nanoTime();
+            executionTime = Math.abs((startLocal- stopLocal)/3) / 1000000;
         } else {
             optimizedGraph = tabuSearch.tabuSearch(graph, exportService.getIterationCount(), exportService.getTailleTabouList());
             stopLocal = System.nanoTime();

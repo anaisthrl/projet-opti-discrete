@@ -37,6 +37,7 @@ public class Neighbourhood {
             case 0 : return new Relocate(graph);
             case 1 : return new RelocateInter(graph);
             case 2 : return new Exchange(graph);
+           // case 3 : return new TwoOpt(graph);
             //case 3 : return new TwoOpt(graph);
            /* case 0:
                 return new SwapInter(
@@ -233,26 +234,26 @@ public class Neighbourhood {
     /**
      *
      * Génération de TOUT les voisins avec RELOCATE EXTERNE pour un véhicule et un point donné
-     * @param vehicleIndex
-     * @param pointIndex
+     * @param vehiculeInd
+     * @param pointInd
      * @return
      */
-    public ArrayList<ArrayList<Vehicule>> generateRelocateExternNeighbors(int vehicleIndex, int pointIndex) {
+    public ArrayList<ArrayList<Vehicule>> generateRelocateExternNeighbors(int vehiculeInd, int pointInd) {
         ArrayList<ArrayList<Vehicule>> neighbors = new ArrayList<>();
 
         ArrayList<Vehicule> defaultSolution = this.graph.cloneVehicules();
 
-        Vehicule vehicleToModify = this.graph.getVehicules().get(vehicleIndex);
-        Node clientToMove = vehicleToModify.removeClientWithIndex(pointIndex);
+        Vehicule vehicleToModify = this.graph.getVehicules().get(vehiculeInd);
+        Node clientToMove = vehicleToModify.removeClientWithIndex(pointInd);
         if (vehicleToModify.getTournee().isEmpty()) {
-            this.graph.getVehicules().remove(vehicleIndex);
+            this.graph.getVehicules().remove(vehiculeInd);
         }
 
         ArrayList<Vehicule> intermediateSolution = this.graph.cloneVehicules();
 
         for (int vehicleInsertIndex = 0; vehicleInsertIndex < intermediateSolution.size(); vehicleInsertIndex++) {
 
-            if (vehicleToModify.getTournee().isEmpty() || vehicleInsertIndex != vehicleIndex) {
+            if (vehicleToModify.getTournee().isEmpty() || vehicleInsertIndex != vehiculeInd) {
 
                 Vehicule vehicleToInsert = this.graph.getVehicules().get(vehicleInsertIndex);
 

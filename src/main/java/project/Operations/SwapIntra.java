@@ -12,7 +12,6 @@ public class SwapIntra extends Operation {
     private final Node b;
 
     public SwapIntra(Node a, Node b) {
-
         this.a = a;
         this.b = b;
     }
@@ -22,15 +21,15 @@ public class SwapIntra extends Operation {
         final Vehicule vA = graph.getVehiculeContaining(a);
         final Vehicule vB = graph.getVehiculeContaining(b);
 
-        if (vA == null) throw new IllegalArgumentException("Node A not in solution");
-        if (vB == null) throw new IllegalArgumentException("Node B not in solution");
-        if (vA == vB) {
-            if (!(a instanceof Depot)) {
-                final int iA = vA.tournee.indexOf(a);
-                final int iB = vA.tournee.indexOf(b);
+        if (vA == null || vB == null) {
+            if (vA == vB) {
+                if (!(a instanceof Depot)) {
+                    final int iA = vA.tournee.indexOf(a);
+                    final int iB = vA.tournee.indexOf(b);
 
-                vA.tournee.set(iA, b);
-                vA.tournee.set(iB, a);
+                    vA.tournee.set(iA, b);
+                    vA.tournee.set(iB, a);
+                }
             }
         }
     }
@@ -61,12 +60,6 @@ public class SwapIntra extends Operation {
                 '}';
     }
 
-    /**
-     * Check si le poids max n'est pas enfreint
-     *
-     * @param graph Graphe
-     * @return validite de l'operation
-     */
     @Override
     public boolean isValid(Graph graph) {
         boolean valid = true;

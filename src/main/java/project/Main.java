@@ -34,7 +34,7 @@ public class Main extends Application {
         URL fxmlFile = new File("src/main/resources/form/cvrp.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(fxmlFile);
         Scene scene = new Scene(root);
-        stage.setTitle("Capacited Vehicle Routing Problem");
+        stage.setTitle("Projet Opti CVRP");
         stage.setScene(scene);
         Main.stage = stage;
         stage.show();
@@ -44,11 +44,11 @@ public class Main extends Application {
     public static void main(String args[]) throws IOException {
         if (Main.ExportCSV) {
 //            ExportController.prepareExport(Algorithm.TABOU, 10000,0 , 0, 1, "RelocateINTER RelocateINTRA Exchange");
-            ExportController.prepareExport(Algorithm.TABOU, 10000,0 , 0, 10, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.TABOU, 10000,0 , 0, 10, "RelocateINTER RelocateINTRA Exchange");
 //            ExportController.prepareExport(Algorithm.TABOU, 10000,0 , 0, 10, "RelocateINTER RelocateINTRA Exchange");
 //            ExportController.prepareExport(Algorithm.TABOU, 10000,0 , 0, 20, "RelocateINTER RelocateINTRA Exchange");
 
-//            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.1, 10, 0, "RelocateINTER RelocateINTRA Exchange");
+            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.1, 10, 0, "RelocateINTER RelocateINTRA Exchange");
 //            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.5, 10, 0, "RelocateINTER RelocateINTRA Exchange");
 //            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.9, 10, 0, "RelocateINTER RelocateINTRA Exchange");
 //            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.1, 100, 0, "RelocateINTER RelocateINTRA Exchange");

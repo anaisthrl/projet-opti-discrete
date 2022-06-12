@@ -1,47 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
-  All rights reserved. Use is subject to license terms.
-
-  This file is available and licensed under the following license:
-
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions
-  are met:
-
-  - Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
-  - Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the distribution.
-  - Neither the name of Oracle Corporation nor the names of its
-    contributors may be used to endorse or promote products derived
-    from this software without specific prior written permission.
-
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -52,25 +16,6 @@
 
 <VBox minHeight="100.0" minWidth="300.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.controller.Controller">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="Fichier">
-          <items>
-            <MenuItem mnemonicParsing="false" onAction="#resetGraph" text="Nouveau" />
-            <MenuItem mnemonicParsing="false" onAction="#filePickerClicked" text="Ouvrir..." />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Paramètres" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quitter" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edition">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Démarrer" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <SplitPane dividerPositions="0.8012519561815337" prefHeight="695.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -88,7 +33,7 @@
                      <children>
                         <TabPane prefHeight="693.0" prefWidth="251.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <tabs>
-                            <Tab text="Données">
+                            <Tab text="Paramètrages">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
@@ -101,49 +46,34 @@
                                              </font></Label>
                                           <ComboBox fx:id="algoTypeSelect" layoutX="16.0" layoutY="84.0" prefWidth="150.0" />
                                           <Label layoutX="15.0" layoutY="67.0" text="Choix algorithme" />
-                                          <AnchorPane fx:id="loadingPane" layoutX="2.0" layoutY="613.0" prefHeight="51.0" prefWidth="251.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                          <AnchorPane fx:id="loadingPane" layoutX="2.0" layoutY="613.0" prefHeight="51.0" prefWidth="251.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                              <children>
                                                 <ProgressBar fx:id="loadingProgressBar" prefHeight="18.0" prefWidth="230.0" progress="0.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="9.0" />
                                                 <Label layoutX="12.0" text="Traitement en cours..." />
                                                 <Label fx:id="loadingPercentage" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="224.0" text="0%" />
                                              </children>
                                           </AnchorPane>
-                                          <Button fx:id="startSimulationBtn" layoutX="16.0" layoutY="455.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Start" AnchorPane.leftAnchor="16.0" />
+                                          <Button fx:id="startSimulationBtn" layoutX="16.0" layoutY="488.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Start" AnchorPane.leftAnchor="16.0" />
                                           <Label layoutX="21.0" layoutY="223.0" text="Nombre de véhicules : " />
                                           <Label fx:id="statNbVehicles" layoutX="143.0" layoutY="223.0" text="0" />
-                                          <CheckBox fx:id="chkbox2Opt" layoutX="18.0" layoutY="341.0" mnemonicParsing="false" text="2-opt" visible="false" />
-                                          <Label layoutX="17.0" layoutY="318.0" text="Transformations élémentaires" visible="false">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <CheckBox fx:id="chkboxExchange" layoutX="18.0" layoutY="361.0" mnemonicParsing="false" text="Exchange" visible="false" />
-                                          <CheckBox fx:id="chkboxRelocate" layoutX="18.0" layoutY="381.0" mnemonicParsing="false" text="Relocate" visible="false" />
-                                          <Separator layoutY="420.0" prefHeight="18.0" prefWidth="251.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                          <CheckBox fx:id="chkbox2Opt" layoutX="25.0" layoutY="385.0" mnemonicParsing="false" text="2-opt" />
+                                          <CheckBox fx:id="chkboxExchange" layoutX="25.0" layoutY="405.0" mnemonicParsing="false" text="Exchange" />
+                                          <CheckBox fx:id="chkboxRelocate" layoutX="25.0" layoutY="425.0" mnemonicParsing="false" text="Relocate" />
+                                          <Separator layoutY="456.0" prefHeight="18.0" prefWidth="251.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                           <Label layoutX="21.0" layoutY="240.0" text="Fitness :" />
                                           <Label fx:id="statFitness" layoutX="66.0" layoutY="240.0" text="n/a" />
                                           <Button fx:id="startSimulation2" layoutX="16.0" layoutY="488.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Lancer" visible="false" />
+                                          <TextField fx:id="temp_textfield" layoutX="15.0" layoutY="274.0" prefHeight="25.0" prefWidth="61.0" promptText="0.5" />
+                                          <TextField fx:id="mu_textfield" layoutX="15.0" layoutY="306.0" prefHeight="25.0" prefWidth="61.0" promptText="0.5" />
+                                          <TextField fx:id="tablist_textfield" layoutX="15.0" layoutY="335.0" prefHeight="25.0" prefWidth="61.0" promptText="0.5" />
+                                          <Label layoutX="88.0" layoutY="278.0" text="Temperature (recuit)" />
+                                          <Label layoutX="92.0" layoutY="310.0" text="Variation µ (recuit)" />
+                                          <Label layoutX="92.0" layoutY="339.0" text="Taille list (recuit)" />
                                        </children>
                                     </AnchorPane>
                               </content>
                             </Tab>
-                            <Tab disable="true" text="Paramètres">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <CheckBox fx:id="arrowCheckbox" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="204.0" selected="false" text="Afficher les flèches" AnchorPane.leftAnchor="16.0" />
-                                          <CheckBox fx:id="colorCheckbox" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="204.0" selected="true" text="Afficher les couleurs" AnchorPane.leftAnchor="16.0" />
-                                          <Button layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#centerGraph" text="Recentrer le graphe" AnchorPane.leftAnchor="16.0" />
-                                          <Label layoutX="16.0" layoutY="101.0" text="Expansion du graphe">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                           <TextField fx:id="graphGrowthTxt" disable="true" layoutX="90.0" layoutY="118.0" prefHeight="25.0" prefWidth="45.0" text="5" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </Tab>
+
                           </tabs>
                         </TabPane>
                      </children>

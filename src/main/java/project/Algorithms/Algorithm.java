@@ -1,7 +1,6 @@
 package project.Algorithms;
 
 public enum Algorithm {
-    RANDOM("Random"),
     RECUIT("Recuit"),
     TABOU("Tabou");
 
