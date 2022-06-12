@@ -62,9 +62,7 @@ public class Relocate extends Operation {
 
             if (!(vehicleToModify.tournee.get(clientToMoveIndex) instanceof Depot)) {
                 Node clientToMove = vehicleToModify.tournee.remove(clientToMoveIndex);
-                if (clientToMove instanceof Depot) {
-                    System.out.println("DEPOOOOOOOOOOT");
-                }
+
                 int insertIndex;
                 while ((insertIndex = random.nextInt(visitToModify.size() + 1)) == clientToMoveIndex) ;
                 vehicleToModify.tournee.add(insertIndex, clientToMove);

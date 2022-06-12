@@ -10,9 +10,12 @@ import project.Model.Graph;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 
 public class ExportController {
     public static void prepareExport(Algorithm algorithm, int iterationCount, double variation, double temperature, int tabuListSize, String transfoElem) {
+        String sep = FileSystems.getDefault().getSeparator();
+
         ExportService exportService;
         if(Algorithm.RECUIT.equals(algorithm)){
             exportService = new ExportService(algorithm, iterationCount, variation, temperature, transfoElem);
@@ -22,9 +25,9 @@ public class ExportController {
         CSVWriter writer = exportService.createCsv();
 
         long start = System.nanoTime();
-        System.out.println("[Simulation] Lancement de tous les fichiers les parametres " + exportService);
+        System.out.printf("[Export CSV] Lancement de l'algorithme %s sur tous les fichiers +\n", algorithm.algorithmName);
 
-        File directory = new File(new File("").getAbsolutePath() + "\\ressources\\");
+        File directory = new File(new File("").getAbsolutePath() + sep + "ressources" + sep);
         FilenameFilter filter = (f, name) -> name.endsWith(".txt");
         String[] pathnames = directory.list(filter);
 
@@ -34,7 +37,7 @@ public class ExportController {
         int totalSize = pathnames.length;
         for (String file : pathnames) {
             startLocal = System.nanoTime();
-            System.out.printf("[Simulation] (%s) Lecture fichier %s", index++ + "/" + totalSize, file);
+            System.out.printf("[Export CSV] (%s) Lecture fichier %s", index++ + "/" + totalSize, file);
 
             try {
                 ExportController.startSimu(file, exportService, writer);
@@ -43,7 +46,7 @@ public class ExportController {
             }
 
             stopLocal = System.nanoTime();
-            System.out.println(" - simulation terminee (" + Math.abs(startLocal- stopLocal) / 1000000 + "ms).");
+            System.out.println(" - Fin du traitement (" + Math.abs(startLocal- stopLocal) / 1000000 + "ms).");
         }
 
         try {
@@ -53,11 +56,13 @@ public class ExportController {
         }
 
         long stop = System.nanoTime();
-        System.out.printf("[SIMULATION] Simulation terminee (temps total = %.2fs).%n", Math.abs(start - stop) / 1000000000.0f);
+        System.out.printf("[Export CSV] Traitement de tous les fichiers termine (temps total = %.2fs).%n", Math.abs(start - stop) / 1000000000.0f);
     }
 
     public static void startSimu(String nomFichier, ExportService exportService, CSVWriter writer) throws IOException {
-        File file = new File(new File("").getAbsolutePath() + "\\ressources\\" + nomFichier);
+        String sep = FileSystems.getDefault().getSeparator();
+
+        File file = new File(new File("").getAbsolutePath() + sep + "ressources" + sep + nomFichier);
         Graph _graph = Graph.load(file);
         //Graph graph = Random.fillVehicle(_graph, Vehicule.MAX_CAPACITY);
         Graph graph = Random.genAleatoire(_graph);

@@ -154,10 +154,6 @@ public class Controller implements Initializable {
 
         for (int i = 0; i < this.currentGraph.nodes.size(); i++) {
             nbColis += this.currentGraph.nodes.get(i).getPoids();
-            /*System.out.println("index : " + i + "; "
-                    + " x : " + this.currentGraph.nodes.get(i).getPos().getX() + "; "
-                    + " y : " + this.currentGraph.nodes.get(i).getPos().getY() + "; "
-                    + " q : " + this.currentGraph.nodes.get(i).getPoids());*/
         }
 
         double res = nbColis / Vehicule.MAX_CAPACITY;
@@ -205,13 +201,13 @@ public class Controller implements Initializable {
                 && Double.parseDouble(this.mu_textfield.getText()) < 1.0) {
             mu = Double.parseDouble(this.mu_textfield.getText());
         } else {
-            mu = 0.9;
+            mu = 0.5;
         }
         if (!Objects.equals(this.temp_textfield.getText(), "")
                 && Double.parseDouble(this.temp_textfield.getText()) > 0.0) {
             temp = Double.parseDouble(this.temp_textfield.getText());
         } else {
-            temp = -300 / Math.log(0.8);
+            temp = 100;
         }
         if (!Objects.equals(this.tablist_textfield.getText(), "")
                 && Double.parseDouble(this.tablist_textfield.getText()) > 0.0) {
@@ -232,7 +228,7 @@ public class Controller implements Initializable {
             setLoading(100.0);
         } else if (Algorithm.TABOU.equals(selectedItem)) {
             setLoading(0.0);
-            TabuSearch tabuSearch = new TabuSearch(20);
+            TabuSearch tabuSearch = new TabuSearch(15);
             this.currentGraph = tabuSearch.tabuSearch(this.currentGraph, 10000, tabuL);
             drawGraph(this.currentGraph);
             setLoading(100.0);

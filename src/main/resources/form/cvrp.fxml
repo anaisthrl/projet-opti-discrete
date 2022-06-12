@@ -56,16 +56,16 @@
                                           <Button fx:id="startSimulationBtn" layoutX="16.0" layoutY="488.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Start" AnchorPane.leftAnchor="16.0" />
                                           <Label layoutX="21.0" layoutY="223.0" text="Nombre de véhicules : " />
                                           <Label fx:id="statNbVehicles" layoutX="143.0" layoutY="223.0" text="0" />
-                                          <CheckBox fx:id="chkbox2Opt" layoutX="25.0" layoutY="385.0" mnemonicParsing="false" text="2-opt" />
-                                          <CheckBox fx:id="chkboxExchange" layoutX="25.0" layoutY="405.0" mnemonicParsing="false" text="Exchange" />
-                                          <CheckBox fx:id="chkboxRelocate" layoutX="25.0" layoutY="425.0" mnemonicParsing="false" text="Relocate" />
+                                          <CheckBox fx:id="chkbox2Opt" layoutX="25.0" layoutY="385.0" mnemonicParsing="false" text="2-opt" visible="false" />
+                                          <CheckBox fx:id="chkboxExchange" layoutX="25.0" layoutY="405.0" mnemonicParsing="false" text="Exchange" visible="false" />
+                                          <CheckBox fx:id="chkboxRelocate" layoutX="25.0" layoutY="425.0" mnemonicParsing="false" text="Relocate" visible="false" />
                                           <Separator layoutY="456.0" prefHeight="18.0" prefWidth="251.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                           <Label layoutX="21.0" layoutY="240.0" text="Fitness :" />
                                           <Label fx:id="statFitness" layoutX="66.0" layoutY="240.0" text="n/a" />
                                           <Button fx:id="startSimulation2" layoutX="16.0" layoutY="488.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="25.0" prefWidth="221.0" text="Lancer" visible="false" />
-                                          <TextField fx:id="temp_textfield" layoutX="15.0" layoutY="274.0" prefHeight="25.0" prefWidth="61.0" promptText="0.5" />
+                                          <TextField fx:id="temp_textfield" layoutX="15.0" layoutY="274.0" prefHeight="25.0" prefWidth="61.0" promptText="100" />
                                           <TextField fx:id="mu_textfield" layoutX="15.0" layoutY="306.0" prefHeight="25.0" prefWidth="61.0" promptText="0.5" />
-                                          <TextField fx:id="tablist_textfield" layoutX="15.0" layoutY="335.0" prefHeight="25.0" prefWidth="61.0" promptText="0.5" />
+                                          <TextField fx:id="tablist_textfield" layoutX="15.0" layoutY="335.0" prefHeight="25.0" prefWidth="61.0" promptText="10" />
                                           <Label layoutX="88.0" layoutY="278.0" text="Temperature (recuit)" />
                                           <Label layoutX="92.0" layoutY="310.0" text="Variation µ (recuit)" />
                                           <Label layoutX="92.0" layoutY="339.0" text="Taille list (recuit)" />

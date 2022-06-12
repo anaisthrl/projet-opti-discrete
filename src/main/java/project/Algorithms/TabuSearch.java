@@ -27,7 +27,7 @@ public class TabuSearch {
 
         for (int i = 0; i < maximumIteration; i++) {
 
-            neighbors = neighbourhood.generateNeighbors();
+            neighbors = neighbourhood.generateNeighbours();
             ArrayList<Vehicule> min = neighbors.stream()
                     .filter(neighbor -> !tabuList.contains(neighbor))
                     .min((solution1, solution2) -> (int) (Graph.getFitness(solution1) - Graph.getFitness(solution2)))

@@ -41,20 +41,20 @@ public class Main extends Application {
 
     public static void main(String args[]) throws IOException {
         if (Main.ExportCSV) {
-//            ExportController.prepareExport(Algorithm.TABOU, 10000,0 , 0, 1, "RelocateINTER RelocateINTRA Exchange");
-//            ExportController.prepareExport(Algorithm.TABOU, 10000,0 , 0, 10, "RelocateINTER RelocateINTRA Exchange");
-//            ExportController.prepareExport(Algorithm.TABOU, 10000,0 , 0, 10, "RelocateINTER RelocateINTRA Exchange");
-//            ExportController.prepareExport(Algorithm.TABOU, 10000,0 , 0, 20, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.TABOU, 5000,0 , 0, 1, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.TABOU, 5000,0 , 0, 10, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.TABOU, 5000,0 , 0, 10, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.TABOU, 5000,0 , 0, 20, "RelocateINTER RelocateINTRA Exchange");
 
-            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.1, 10, 0, "RelocateINTER RelocateINTRA Exchange");
-//            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.5, 10, 0, "RelocateINTER RelocateINTRA Exchange");
-//            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.9, 10, 0, "RelocateINTER RelocateINTRA Exchange");
-//            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.1, 100, 0, "RelocateINTER RelocateINTRA Exchange");
-//            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.5, 100, 0, "RelocateINTER RelocateINTRA Exchange");
-//            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.9, 100, 0, "RelocateINTER RelocateINTRA Exchange");
-//            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.1, 1000, 0, "RelocateINTER RelocateINTRA Exchange");
-//            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.5, 1000, 0, "RelocateINTER RelocateINTRA Exchange");
-//            ExportController.prepareExport(Algorithm.RECUIT, 15000, 0.9, 1000, 0, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.1, 10, 0, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.5, 10, 0, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.9, 10, 0, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.1, 100, 0, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.5, 100, 0, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.9, 100, 0, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.1, 1000, 0, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.5, 1000, 0, "RelocateINTER RelocateINTRA Exchange");
+//            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.9, 1000, 0, "RelocateINTER RelocateINTRA Exchange");
             return;
         }
 
@@ -119,50 +119,6 @@ public class Main extends Application {
                 }
             }
             graph.vehicules.add(vehicule);
-        }
-        return graph;
-    }
-
-    public static Graph load(File myFile) throws IOException {
-        //File myFile = new File(pathFile);
-
-        FileInputStream inputStream = new FileInputStream(myFile);
-
-        List<String> inputLines = IOUtils.readLines(inputStream);
-
-        /*
-         * READ input
-         */
-        int i = 0, x, y, q, index;
-        String[] splittedLine;
-        Graph graph = new Graph();
-        graph.nodes = new ArrayList<Node>();
-        graph.vehicules = new ArrayList<Vehicule>();
-
-        for (String line : inputLines) {
-
-            splittedLine = line.trim().split(";");
-
-            //     log.debug("line {}: {}", i, Arrays.toString(splittedLine));
-
-            if (i == 0) {
-
-            } else if (i == 1) {// second line: depot coordinates
-                index = Integer.parseInt(splittedLine[0]);
-                x = Integer.parseInt(splittedLine[1]);    // x-coordinates
-                y = Integer.parseInt(splittedLine[2]);    // y-coordinates
-                q = Integer.parseInt(splittedLine[3]);    // y-coordinates
-                graph.nodes.add(new Depot(x, y, q, index));
-
-            } else {
-                index = Integer.parseInt(splittedLine[0]);// other lines
-                x = Integer.parseInt(splittedLine[1]);    // x-coordinates
-                y = Integer.parseInt(splittedLine[2]);    // y-coordinates
-                q = Integer.parseInt(splittedLine[3]);    // demand
-
-                graph.nodes.add(new Client(x, y, q, index));
-            }
-            i++;
         }
         return graph;
     }
