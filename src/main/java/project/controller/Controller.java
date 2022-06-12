@@ -23,6 +23,7 @@ import project.Model.Vehicule;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileSystems;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -91,17 +92,23 @@ public class Controller implements Initializable {
 
     @FXML
     public void filePickerClicked() {
+        String path = System.getProperty("user.dir");
+        String sep = FileSystems.getDefault().getSeparator();
+
+       // URL fxmlFile = new File("src" + sep + "main" + sep + "resources" + sep + "form" + sep + "cvrp.fxml").toURI().toURL();
+
         FileChooser fileChooser = new FileChooser();
 
         // Extensions
         FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("Text files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(txtFilter);
 
+
         // Default directory
-        String defaultDirectoryString = new File("").getAbsolutePath() + "\\ressources";
+        String defaultDirectoryString = new File("").getAbsolutePath() + sep +"ressources";
         File defaultDirectory = new File(defaultDirectoryString);
         if (!defaultDirectory.canRead()) {
-            defaultDirectory = new File("c:/");
+            defaultDirectory = new File(path);
         }
         fileChooser.setInitialDirectory(defaultDirectory);
 

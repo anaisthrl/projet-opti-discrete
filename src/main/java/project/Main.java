@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,7 +26,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        URL fxmlFile = new File("src/main/resources/form/cvrp.fxml").toURI().toURL();
+        String path = System.getProperty("user.dir");
+        String sep = FileSystems.getDefault().getSeparator();
+
+        URL fxmlFile = new File("src" + sep + "main" + sep + "resources" + sep + "form" + sep + "cvrp.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(fxmlFile);
         Scene scene = new Scene(root);
         stage.setTitle("Projet Opti CVRP");
@@ -114,7 +118,6 @@ public class Main extends Application {
                     encorePlace = false;
                 }
             }
-            //vehicule.tournee.add(depot);
             graph.vehicules.add(vehicule);
         }
         return graph;
