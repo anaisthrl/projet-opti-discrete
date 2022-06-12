@@ -5,9 +5,7 @@ import project.Algorithms.Algorithm;
 import project.Algorithms.Random;
 import project.Algorithms.RecuitSimule;
 import project.Algorithms.TabuSearch;
-import project.Main;
 import project.Model.Graph;
-import project.Model.Vehicule;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -60,7 +58,7 @@ public class ExportController {
 
     public static void startSimu(String nomFichier, ExportService exportService, CSVWriter writer) throws IOException {
         File file = new File(new File("").getAbsolutePath() + "\\ressources\\" + nomFichier);
-        Graph _graph = Main.load(file);
+        Graph _graph = Graph.load(file);
         //Graph graph = Random.fillVehicle(_graph, Vehicule.MAX_CAPACITY);
         Graph graph = Random.genAleatoire(_graph);
 

@@ -122,7 +122,7 @@ public class Controller implements Initializable {
     public void loadGraph(File file) throws IOException {
 
 
-        this.currentGraph = Main.load(file);
+        this.currentGraph = Graph.load(file);
         showresult();
         //Random.fillVehicle(this.currentGraph, Vehicule.MAX_CAPACITY);
         /*for (Vehicule vehicule : currentGraph.vehicules) {
@@ -237,7 +237,7 @@ public class Controller implements Initializable {
                 System.out.print(currentGraph.nodes.indexOf(node) + " ");
             }
             System.out.print("\n");
-            System.out.println("Distance de la tournee : " + vehicule.longueur);
+            System.out.println("Distance de la tournee : " + vehicule.longueurTournee);
         }
     }
 

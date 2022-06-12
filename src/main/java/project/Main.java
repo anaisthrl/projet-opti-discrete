@@ -19,15 +19,9 @@ import java.util.List;
 import java.util.Random;
 
 public class Main extends Application {
-    private static final boolean ExportCSV = true;
+    private static final boolean ExportCSV = false;
 
     private static Stage stage;
-    public static String[] paths = {
-            "ressources/A3205.txt",
-            "ressources/A3305.txt",
-            "ressources/A3306.txt",
-            "ressources/A3405.txt",
-    };
 
     @Override
     public void start(Stage stage) throws IOException {

@@ -3,7 +3,6 @@ package project.Operations;
 import project.Model.*;
 
 import java.util.*;
-import java.util.function.UnaryOperator;
 
 public class TwoOpt extends Operation {
 

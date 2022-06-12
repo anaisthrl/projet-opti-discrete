@@ -1,6 +1,5 @@
 package project.Model;
 
-import java.awt.print.PrinterGraphics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +7,7 @@ public class Vehicule {
     public static int MAX_CAPACITY = 100;
 
     public int nbColis = 0;
-    public double longueur = 0;
+    public double longueurTournee = 0;
     public Depot depot;
     public List<Node> tournee;
 
@@ -72,7 +71,7 @@ public class Vehicule {
             }
             res += getDistanceBetween2Node(tournee.get(tournee.size() - 1), depot);
         }
-        this.longueur = res;
+        this.longueurTournee = res;
     }
 
 
@@ -86,12 +85,12 @@ public class Vehicule {
     /**
      * @return la longueur totale du chemin
      */
-    public double getLongueur() {
+    public double getLongueurTournee() {
         if(tournee.size() > 0) {
             updateDistanceTournee();
             updateNbColis();
         }
-        return longueur;
+        return longueurTournee;
     }
 
     /**

@@ -28,11 +28,6 @@ public class Neighbourhood {
         Vehicule vehicule;
         int tourneeSize;
 
-        int relocate_inter = 0;
-        int relocate_intra = 1;
-        int exchange = 2;
-        int twoopt = 3;
-
         switch (randOperation) {
             case 0 : return new Relocate(graph);
             case 1 : return new RelocateInter(graph);
@@ -191,7 +186,7 @@ public class Neighbourhood {
             for (int pointIndex = 0; pointIndex < storedSolution.get(vehicleIndex).getTournee().size(); pointIndex++) {
                 neighbors.addAll(generateRelocateInternNeighbors(vehicleIndex, pointIndex));
                 neighbors.addAll(generateRelocateExternNeighbors(vehicleIndex, pointIndex));
-                neighbors.addAll(generateExchangeInternNeighbors(vehicleIndex, pointIndex)); //Exchange
+                neighbors.addAll(generateExchangeInternNeighbors(vehicleIndex, pointIndex));
                 this.graph.setVehicules(this.graph.cloneVehicules());
             }
         }
