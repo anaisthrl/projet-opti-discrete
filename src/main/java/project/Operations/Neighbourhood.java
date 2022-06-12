@@ -1,20 +1,22 @@
 package project.Operations;
 
-import project.Model.*;
+import project.Model.Graph;
+import project.Model.Node;
+import project.Model.Vehicule;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Neighbourhood {
     private final Random random = new Random();
     private int tailleVoisinage = 30;
     private Graph graph;
 
-    //RECUIT
-
     public Neighbourhood() {
 
     }
+
     public Neighbourhood(Graph graph) {
         this.graph = graph;
     }
@@ -24,80 +26,18 @@ public class Neighbourhood {
         int randOperation = random.nextInt(3);
 
         final List<Node> nodes = graph.getNodes();
-        final int nodeSize = nodes.size();
-        Vehicule vehicule;
-        int tourneeSize;
 
         switch (randOperation) {
-            case 0 : return new Relocate(graph);
-            case 1 : return new RelocateInter(graph);
-            case 2 : return new Exchange(graph);
+            case 0:
+                return new Relocate(graph);
+            case 1:
+                return new RelocateInter(graph);
+            case 2:
+                return new Exchange(graph);
             //case 3 : return new TwoOpt(graph);
-            default: return null;
+            default:
+                return null;
         }
-    }
-
-
-    /**
-     * @param node   node
-     * @param amount nombre de noeuds a renvoyer
-     * @return liste des points les plus noeuds de node
-     */
-    private List<Node> getClosestNodes(Graph graph, Node node, int amount) {
-        List<Node> closestNodes = new ArrayList<>();
-        List<Node> nodes = graph.getVehicules().stream().map((vehicule -> vehicule.tournee.stream().toList()))
-                .flatMap(Collection::parallelStream)
-                .filter(_node -> !(_node instanceof Depot))
-                .collect(Collectors.toList());
-        for (int i = 0; i < amount; i++) {
-            closestNodes.add(
-                    nodes.stream()
-                            .filter(_node ->
-                                    _node.getDistanceToNode(node) == nodes.stream()
-                                            .mapToDouble(_node2 -> _node.getDistanceToNode(node))
-                                            .min()
-                                            .orElseThrow()
-                            ).findFirst()
-                            .orElseThrow()
-            );
-            nodes.remove(closestNodes.get(i));
-        }
-        return closestNodes;
-    }
-
-    /**
-     * @param graph   graph
-     * @param node    node initial
-     * @param tournee tournee dans lequel le node suivant ne dois pas se trouver
-     * @return node le plus proche qui ne se trouve pas dans le tournee
-     */
-    private Node getClosestNodeNotInTournee(Graph graph, Node node, List<Node>  tournee) {
-
-        return getClosestNodes(graph, node, 20).stream()
-                .filter(point1 -> !tournee.contains(point1))
-                .findFirst()
-                .orElseThrow();
-
-    }
-
-    /**
-     * @param graph Graph
-     * @return point aleatoire (non depot)
-     */
-    private Node getRandomPoint(Graph graph) {
-        List<Node> points = getAllPointsWithoutDepot(graph);
-        return points.get(random.nextInt(points.size()));
-    }
-
-    /**
-     * @param graph Graph
-     * @return tous les points de la graph (non depot)
-     */
-    private List<Node> getAllPointsWithoutDepot(Graph graph) {
-        return graph.getVehicules().stream().map((vehicule -> vehicule.tournee.stream().toList()))
-                .flatMap(Collection::parallelStream)
-                .filter(node -> !(node instanceof Depot))
-                .toList();
     }
 
     /**
@@ -119,7 +59,6 @@ public class Neighbourhood {
             }
         }
 
-        //On remet la solution sauvegardée au graph
         this.graph.setVehicules(storedSolution);
 
         return neighbours;
@@ -127,7 +66,7 @@ public class Neighbourhood {
     }
 
     /**
-     *Génération de TOUT les voisins avec RELOCATE INTERNE pour un véhicule et un point donné
+     * Génération de TOUT les voisins avec RELOCATE INTERNE pour un véhicule et un point donné
      */
     public ArrayList<ArrayList<Vehicule>> generateRelocateInternNeighbors(int vehicleIndex, int pointIndex) {
         ArrayList<ArrayList<Vehicule>> neighbors = new ArrayList<>();
@@ -155,8 +94,8 @@ public class Neighbourhood {
     }
 
     /**
-     *
      * Génération de TOUT les voisins avec RELOCATE EXTERNE pour un véhicule et un point donné
+     *
      * @param vehiculeInd
      * @param pointInd
      * @return
@@ -183,7 +122,7 @@ public class Neighbourhood {
                 if (vehicleToInsert.getNbColis() + clientToMove.getPoids() <= Vehicule.MAX_CAPACITY) {
                     ArrayList<Node> clientsToInsert = (ArrayList<Node>) vehicleToInsert.getTournee();
                     for (int pointInsertIndex = 0; pointInsertIndex <= clientsToInsert.size(); pointInsertIndex++) {
-                        vehicleToInsert.addClientWithIndex(clientToMove,pointInsertIndex);
+                        vehicleToInsert.addClientWithIndex(clientToMove, pointInsertIndex);
                         neighbors.add(this.graph.cloneVehicules());
                         vehicleToInsert.removeClientWithIndex(pointInsertIndex);
                     }
@@ -205,6 +144,7 @@ public class Neighbourhood {
     /**
      * TABU
      * Génére tout les voisins en échangeant deux points d'un véhicule
+     *
      * @param vehiculeInd
      * @param client1ToExchangeIndex
      * @return
@@ -218,7 +158,7 @@ public class Neighbourhood {
 
         if (size >= 2) {
 
-            for (int client2ToExchangeIndex = 0; client2ToExchangeIndex < size-2; client2ToExchangeIndex++){
+            for (int client2ToExchangeIndex = 0; client2ToExchangeIndex < size - 2; client2ToExchangeIndex++) {
                 doExchangeTabu(vehicule, client1ToExchangeIndex, client2ToExchangeIndex);
                 neighbors.add(this.graph.cloneVehicules());
             }
@@ -241,8 +181,8 @@ public class Neighbourhood {
             }
             client2 = vehicule.removeClientWithIndex(client2Index);
             client1 = vehicule.removeClientWithIndex(client1Index);
-            vehicule.addClientWithIndex(client2,client1Index);
-            vehicule.addClientWithIndex(client1,client2Index);
+            vehicule.addClientWithIndex(client2, client1Index);
+            vehicule.addClientWithIndex(client1, client2Index);
 
         }
     }

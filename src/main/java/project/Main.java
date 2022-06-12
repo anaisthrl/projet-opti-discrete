@@ -1,22 +1,20 @@
 package project;
 
-import project.Algorithms.Algorithm;
-import project.ExportDonnees.ExportController;
-import project.Model.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.apache.commons.io.IOUtils;
+import project.Model.Depot;
+import project.Model.Graph;
+import project.Model.Node;
+import project.Model.Vehicule;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Main extends Application {
@@ -45,7 +43,6 @@ public class Main extends Application {
 //            ExportController.prepareExport(Algorithm.TABOU, 5000,0 , 0, 10, "RelocateINTER RelocateINTRA Exchange");
 //            ExportController.prepareExport(Algorithm.TABOU, 5000,0 , 0, 10, "RelocateINTER RelocateINTRA Exchange");
 //            ExportController.prepareExport(Algorithm.TABOU, 5000,0 , 0, 20, "RelocateINTER RelocateINTRA Exchange");
-
 //            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.1, 10, 0, "RelocateINTER RelocateINTRA Exchange");
 //            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.5, 10, 0, "RelocateINTER RelocateINTRA Exchange");
 //            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.9, 10, 0, "RelocateINTER RelocateINTRA Exchange");
@@ -55,7 +52,6 @@ public class Main extends Application {
 //            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.1, 1000, 0, "RelocateINTER RelocateINTRA Exchange");
 //            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.5, 1000, 0, "RelocateINTER RelocateINTRA Exchange");
 //            ExportController.prepareExport(Algorithm.RECUIT, 5000, 0.9, 1000, 0, "RelocateINTER RelocateINTRA Exchange");
-            return;
         }
 
 

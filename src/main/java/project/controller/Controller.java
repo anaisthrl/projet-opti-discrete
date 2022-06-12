@@ -95,7 +95,7 @@ public class Controller implements Initializable {
         String path = System.getProperty("user.dir");
         String sep = FileSystems.getDefault().getSeparator();
 
-       // URL fxmlFile = new File("src" + sep + "main" + sep + "resources" + sep + "form" + sep + "cvrp.fxml").toURI().toURL();
+        // URL fxmlFile = new File("src" + sep + "main" + sep + "resources" + sep + "form" + sep + "cvrp.fxml").toURI().toURL();
 
         FileChooser fileChooser = new FileChooser();
 
@@ -105,7 +105,7 @@ public class Controller implements Initializable {
 
 
         // Default directory
-        String defaultDirectoryString = new File("").getAbsolutePath() + sep +"ressources";
+        String defaultDirectoryString = new File("").getAbsolutePath() + sep + "ressources";
         File defaultDirectory = new File(defaultDirectoryString);
         if (!defaultDirectory.canRead()) {
             defaultDirectory = new File(path);
